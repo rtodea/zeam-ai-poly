@@ -1,0 +1,20 @@
+[project]
+name = "popularity-flower"
+version = "0.1.0"
+description = "Flower Monitoring Project"
+dependencies = [
+    "zeam-scheduler",
+    "flower>=2.0.1",
+    "redis>=5.0.1",
+]
+requires-python = ">=3.12"
+
+[tool.uv.sources]
+zeam-scheduler = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+dev-mode-dirs = ["../../components", "../../bases"]

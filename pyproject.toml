@@ -20,5 +20,22 @@ dev-mode-dirs=["components","bases", "development","."]
 
 [tool.uv.build-backend]
 namespace=true
-module-name="recommender"
+module-name="zeam"
 module-root=""
+
+[tool.uv.workspace]
+members = [
+    "components/zeam/popularity",
+    "components/zeam/scheduler",
+    "bases/zeam/api",
+    "bases/zeam/worker",
+    "bases/zeam/beat",
+    "projects/popularity-api",
+    "projects/popularity-worker",
+    "projects/popularity-beat",
+    "projects/popularity-flower",
+    "development/zeam/dev",
+]
+
+
+

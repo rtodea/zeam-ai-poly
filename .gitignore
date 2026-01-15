@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# IDEs
+.cursor
+.idea
+
+# Env files
+.env

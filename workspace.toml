@@ -1,5 +1,5 @@
 [tool.polylith]
-namespace = "recommender"
+namespace = "zeam"
 git_tag_pattern = "stable-*"
 
 [tool.polylith.structure]

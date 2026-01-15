@@ -1,0 +1,21 @@
+[project]
+name = "popularity-beat"
+version = "0.1.0"
+description = "Celery Beat Project"
+dependencies = [
+    "zeam-beat",
+    "zeam-scheduler",
+    "celery[redis]>=5.4.0",
+]
+requires-python = ">=3.12"
+
+[tool.uv.sources]
+zeam-beat = { workspace = true }
+zeam-scheduler = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+dev-mode-dirs = ["../../components", "../../bases"]
