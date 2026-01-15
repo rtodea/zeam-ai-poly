@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Flower Monitoring Project"
 dependencies = [
     "zeam-scheduler",
+    "zeam-popularity",
     "flower>=2.0.1",
     "redis>=5.0.1",
 ]
@@ -11,6 +12,7 @@ requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-scheduler = { workspace = true }
+zeam-popularity = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]
@@ -18,3 +20,10 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build]
 dev-mode-dirs = ["../../components", "../../bases"]
+
+[tool.polylith]
+project = "popularity-flower"
+
+[tool.polylith.bricks]
+"../../components/zeam/scheduler" = "zeam/scheduler"
+"../../components/zeam/popularity" = "zeam/popularity"

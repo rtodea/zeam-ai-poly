@@ -30,3 +30,13 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build]
 dev-mode-dirs = ["../../components", "../../bases"]
+
+[tool.polylith]
+project = "development"
+
+[tool.polylith.bricks]
+"../../../bases/zeam/api" = "zeam/api"
+"../../../bases/zeam/worker" = "zeam/worker"
+"../../../bases/zeam/beat" = "zeam/beat"
+"../../../components/zeam/popularity" = "zeam/popularity"
+"../../../components/zeam/scheduler" = "zeam/scheduler"

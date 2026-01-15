@@ -26,4 +26,10 @@ build-backend = "hatchling.build"
 [tool.hatch.build]
 dev-mode-dirs = ["../../components", "../../bases"]
 
+[tool.polylith]
+project = "popularity-api"
 
+
+[tool.polylith.bricks]
+"../../bases/zeam/api" = "zeam/api"
+"../../components/zeam/popularity" = "zeam/popularity"

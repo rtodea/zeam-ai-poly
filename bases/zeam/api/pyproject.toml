@@ -5,6 +5,8 @@ description = "API Base"
 dependencies = [
     "zeam-popularity",
     "fastapi>=0.109.0",
+    "celery[redis]>=5.4.0",
+    "pytest>=8.0.0",
 ]
 requires-python = ">=3.12"
 
@@ -17,3 +19,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeam"]
+
+[dependency-groups]
+test = [
+    "pytest>=8.0.0",
+]
+
+[tool.polylith]
+brick = "base:api"

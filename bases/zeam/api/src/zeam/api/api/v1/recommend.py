@@ -2,7 +2,7 @@ import json
 import logging
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException
-from popularity_recommender.domain.schemas import (
+from zeam.popularity.domain.schemas import (
     RecommendationRequest,
     RecommendationResponse,
     CuratedRecommendationResponse,
