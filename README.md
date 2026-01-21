@@ -133,8 +133,24 @@ This commands builds:
 
 ### Run Services Locally
 
-You can run individual services locally using `uv` and the specific project configuration.
+You can run individual services locally using `uv` and the specific project configuration (as shown above), or using `make` to run the Docker containers.
 
+**Using Docker (via Makefile):**
+```bash
+# Run API (exposed on port 8000)
+make run-api
+
+# Run Worker
+make run-worker
+
+# Run Beat
+make run-beat
+
+# Run Flower (exposed on port 5555)
+make run-flower
+```
+
+**Using uv (Native):**
 **Run API:**
 ```bash
 uv run --project projects/popularity-api uvicorn zeam.api.main:app --reload

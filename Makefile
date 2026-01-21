@@ -34,3 +34,16 @@ build-beat:
 
 build-flower:
 	docker build -t zeam-popularity-flower -f projects/popularity-flower/Dockerfile .
+
+# Docker Run commands
+run-api:
+	docker run --rm --env-file .env -p 8000:8000 zeam-popularity-api
+
+run-worker:
+	docker run --rm --env-file .env zeam-popularity-worker
+
+run-beat:
+	docker run --rm --env-file .env zeam-popularity-beat
+
+run-flower:
+	docker run --rm --env-file .env -p 5555:5555 zeam-popularity-flower
