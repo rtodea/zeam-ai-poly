@@ -36,8 +36,10 @@ build-flower:
 	docker build -t zeam-popularity-flower -f projects/popularity-flower/Dockerfile .
 
 # Docker Run commands
+docker-run-all: run-api run-worker run-beat run-flower redis-local
+
 run-api:
-	docker run --rm --env-file .env -p 8000:8000 zeam-popularity-api
+	docker run --rm --env-file .env -p 7311:7311 zeam-popularity-api
 
 run-worker:
 	docker run --rm --env-file .env zeam-popularity-worker
@@ -47,3 +49,7 @@ run-beat:
 
 run-flower:
 	docker run --rm --env-file .env -p 5555:5555 zeam-popularity-flower
+
+redis-local:
+	docker run --rm -d --name zeam-redis -p 127.0.0.1:6379:6379 redis:latest
+	
