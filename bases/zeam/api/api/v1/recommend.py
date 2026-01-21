@@ -11,6 +11,7 @@ from zeam.popularity.domain.schemas import (
     CuratedRecommendationRequest
 )
 from zeam.redis_client.client import get_redis_client
+from zeam.worker_registry.curated_content import get_curated_content_redis_key
 from redis.asyncio import Redis
 
 router = APIRouter()
@@ -111,16 +112,10 @@ async def get_content_recommendations(
     # Redis Key: popularity:curated:{start_date}:{end_date}:{dma_id_or_global}
     # We need to extract YYYY-MM-DD from the strings
     
-    # helper to clean date
-    def get_date_str(dt_str: str) -> str:
-        if " " in dt_str:
-            return dt_str.split(" ")[0]
-        return dt_str
-
-    key_start_date = get_date_str(start_date_str)
-    key_end_date = get_date_str(end_date_str)
-
-    redis_key = f"zeam-recommender:popularity:curated:{key_start_date}:{key_end_date}:{dma_suffix}"
+    # redis_key = f"zeam-recommender:popularity:curated:{key_start_date}:{key_end_date}:{dma_suffix}"
+    # Use shared function
+    # Note: the shared function expects strings, possibly with HH:MM:SS, but it handles splitting.
+    redis_key = get_curated_content_redis_key(start_date_str, end_date_str, request.dma_id)
     
     logger.info(f"Fetching curated content from key: {redis_key}")
     
