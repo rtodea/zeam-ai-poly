@@ -5,6 +5,7 @@ description = "Celery Worker Project"
 dependencies = [
     "zeam-celery-core",
     "zeam-worker",
+    "zeam-analytics",
     "zeam-popularity",
     "celery[redis]>=5.4.0",
     "redis>=5.0.1",
@@ -19,6 +20,7 @@ requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-worker = { workspace = true }
+zeam-analytics = { workspace = true }
 zeam-celery-core = { workspace = true }
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }

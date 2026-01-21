@@ -5,19 +5,13 @@ description = "Celery Beat Project"
 dependencies = [
     "zeam-beat",
     "zeam-celery-core",
-    "zeam-popularity",
     "celery[redis]>=5.4.0",
-    "zeam-redshift",
-    "zeam-redis-client",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-beat = { workspace = true }
 zeam-celery-core = { workspace = true }
-zeam-popularity = { workspace = true }
-zeam-redshift = { workspace = true }
-zeam-redis-client = { workspace = true }
 
 
 [build-system]

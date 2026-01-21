@@ -784,9 +784,6 @@ dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "zeam-beat" },
     { name = "zeam-celery-core" },
-    { name = "zeam-popularity" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
 ]
 
 [package.metadata]
@@ -794,9 +791,6 @@ requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
     { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
 ]
 
 [[package]]
@@ -833,6 +827,7 @@ dependencies = [
     { name = "python-json-logger" },
     { name = "redis" },
     { name = "redshift-connector" },
+    { name = "zeam-analytics" },
     { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
@@ -848,6 +843,7 @@ requires-dist = [
     { name = "python-json-logger", specifier = ">=2.0.7" },
     { name = "redis", specifier = ">=5.0.1" },
     { name = "redshift-connector", specifier = ">=2.0.910" },
+    { name = "zeam-analytics", editable = "components/zeam/analytics" },
     { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
@@ -1453,26 +1449,20 @@ name = "zeam-beat"
 version = "0.1.0"
 source = { editable = "bases/zeam/beat" }
 dependencies = [
+    { name = "celery", extra = ["redis"] },
     { name = "zeam-celery-core" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "zeam-celery-core", editable = "components/zeam/celery_core" }]
+requires-dist = [
+    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
+]
 
 [[package]]
 name = "zeam-celery-core"
 version = "0.1.0"
 source = { editable = "components/zeam/celery_core" }
-dependencies = [
-    { name = "celery", extra = ["redis"] },
-    { name = "flower" },
-    { name = "pandas" },
-    { name = "python-json-logger" },
-    { name = "zeam-analytics" },
-    { name = "zeam-popularity" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
-]
 
 [package.dev-dependencies]
 test = [
@@ -1480,17 +1470,6 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "celery", specifier = ">=5.3.6" },
-    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
-    { name = "flower", specifier = ">=2.0.1" },
-    { name = "pandas", specifier = ">=2.1.4" },
-    { name = "python-json-logger", specifier = ">=2.0.7" },
-    { name = "zeam-analytics", editable = "components/zeam/analytics" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
-]
 
 [package.metadata.requires-dev]
 test = [{ name = "pytest", specifier = ">=8.0.0" }]
@@ -1557,8 +1536,20 @@ name = "zeam-worker"
 version = "0.1.0"
 source = { editable = "bases/zeam/worker" }
 dependencies = [
+    { name = "celery", extra = ["redis"] },
+    { name = "pandas" },
+    { name = "python-json-logger" },
+    { name = "zeam-analytics" },
     { name = "zeam-celery-core" },
+    { name = "zeam-redis-client" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "zeam-celery-core", editable = "components/zeam/celery_core" }]
+requires-dist = [
+    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
+    { name = "pandas", specifier = ">=2.1.4" },
+    { name = "python-json-logger", specifier = ">=2.0.7" },
+    { name = "zeam-analytics", editable = "components/zeam/analytics" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
+    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
+]

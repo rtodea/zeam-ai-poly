@@ -17,9 +17,10 @@ dev-repl:
 	uv run --project development/zeam/dev ipython
 
 test:
-	uv run --project development/zeam/dev pytest components/zeam/celery_core/tests
 	uv run --project development/zeam/dev pytest components/zeam/analytics/tests
 	uv run --project development/zeam/dev pytest bases/zeam/api/tests
+
+tests: test
 
 # Docker Build commands
 build: build-api build-worker build-beat build-flower

@@ -1,4 +1,4 @@
-from zeam.celery_core.core import app
+from zeam.beat.main import app
 from zeam.beat.schedule import get_beat_schedule
 import sys
 

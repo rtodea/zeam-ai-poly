@@ -4,6 +4,7 @@ Define all periodic tasks here.
 """
 import os
 from celery.schedules import crontab, schedule
+from zeam.celery_core.core import TaskNames
 
 # Get worker interval from environment (default 60 minutes to match old behavior)
 WORKER_INTERVAL_MINUTES = int(os.getenv("WORKER_INTERVAL_MINUTES", "60"))

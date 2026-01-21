@@ -1,5 +1,5 @@
 import redis.asyncio as redis
-from zeam.redis.config import settings
+from zeam.redis_client.config import settings
 
 async def get_redis_client() -> redis.Redis:
     return redis.Redis(

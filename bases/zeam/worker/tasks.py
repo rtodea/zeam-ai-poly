@@ -1,5 +1,5 @@
 """
-Worker for calculating curated content popularity.
+Worker tasks implementation
 """
 import json
 import logging
@@ -7,7 +7,8 @@ import os
 from typing import Dict, Any, Optional
 
 import redis
-from zeam.celery_core.core import app
+from celery import shared_task
+from zeam.celery_core.core import TaskNames
 from zeam.analytics.curated_content import get_results
 
 logger = logging.getLogger(__name__)
@@ -25,7 +26,7 @@ def get_redis_client() -> redis.Redis:
         decode_responses=True
     )
 
-@app.task(bind=True, name="workers.curated_content_popularity")
+@shared_task(bind=True, name=TaskNames.CURATED_CONTENT_POPULARITY)
 def curated_content_popularity(self, start_date: str, end_date: str, dma_id: Optional[int] = None, item_count: int = 10) -> Dict[str, Any]:
     """
     Calculate curated content popularity for a given period and optionally filter by DMA.
@@ -37,6 +38,7 @@ def curated_content_popularity(self, start_date: str, end_date: str, dma_id: Opt
         item_count: Number of items to return (default 10)
     """
     run_id = self.request.id
+    # We can use the registry name or just string log
     task_name = "curated_content_popularity"
     
     try:
