@@ -31,9 +31,9 @@ async def get_recommendations(
     keys_to_try = []
     
     if request.dmaid:
-        keys_to_try.append(f"popularity:dma:{request.dmaid}")
+        keys_to_try.append(f"zeam-recommender:popularity:dma:{request.dmaid}")
     
-    keys_to_try.append("popularity:global")
+    keys_to_try.append("zeam-recommender:popularity:global")
     
     items_data = None
     used_key = None
@@ -120,7 +120,7 @@ async def get_content_recommendations(
     key_start_date = get_date_str(start_date_str)
     key_end_date = get_date_str(end_date_str)
 
-    redis_key = f"popularity:curated:{key_start_date}:{key_end_date}:{dma_suffix}"
+    redis_key = f"zeam-recommender:popularity:curated:{key_start_date}:{key_end_date}:{dma_suffix}"
     
     logger.info(f"Fetching curated content from key: {redis_key}")
     

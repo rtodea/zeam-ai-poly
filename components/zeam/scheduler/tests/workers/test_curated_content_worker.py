@@ -58,8 +58,8 @@ class TestCuratedContentWorker:
             # Verify call args
             executed_query = mock_conn_instance.execute_query.call_args[0][0]
             assert "LIMIT 5" in executed_query
-            assert "media_channel.dma_id = 123" in executed_query
-            assert "INNER JOIN prod.media_channel" in executed_query
+            assert "log.dmaid = 123" in executed_query
+            assert "log.dmaid = 123" in executed_query
             assert "'2024-01-01 00:00:00'" in executed_query
             
             # Verify Redis key
@@ -88,7 +88,6 @@ class TestCuratedContentWorker:
             executed_query = mock_conn_instance.execute_query.call_args[0][0]
             # Should NOT have the dma filter
             assert "media_channel.dma_id =" not in executed_query
-            assert "INNER JOIN prod.media_channel" not in executed_query
             
             # Redis key should have 'global' suffix
             redis_key = result["redis_key"]

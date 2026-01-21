@@ -1,4 +1,7 @@
 import pytest
+import json
+from unittest.mock import patch
+import sys
 from fastapi.testclient import TestClient
 from unittest.mock import AsyncMock, MagicMock
 
@@ -14,7 +17,11 @@ mock_redis = AsyncMock()
 async def get_mock_redis():
     return mock_redis
 
-app.dependency_overrides[get_redis_client] = get_mock_redis
+@pytest.fixture(autouse=True)
+def override_redis_dependency():
+    app.dependency_overrides[get_redis_client] = get_mock_redis
+    yield
+    app.dependency_overrides = {}
 
 def test_health_check():
     response = client.get("/api/health")
@@ -23,9 +30,12 @@ def test_health_check():
 
 
 def test_health_connections():
-    response = client.get("/api/health/connections")
-    assert response.status_code == 200
-    assert response.json() == {"redis": "ok", "redshift": "error"}
+    with patch("zeam.api.api.health.RedshiftConnection") as mock_conn:
+        mock_conn.return_value.__enter__.return_value.execute_query.return_value = []
+        response = client.get("/api/health/connections")
+        assert response.status_code == 200
+        # Redis is mocked to ok, Redshift is mocked to ok
+        assert response.json() == {"redis": "ok", "redshift": "ok"}
 
 def test_recommendation_global_fallback():
     # Setup mock
@@ -41,12 +51,14 @@ def test_recommendation_global_fallback():
     ]
     
     async def mock_get(key):
-        if key == "popularity:global":
+        if key == "zeam-recommender:popularity:global":
             import json
             return json.dumps(mock_data)
         return None
         
     mock_redis.get.side_effect = mock_get
+    
+    # Ensure correct event loop handling if needed (FastAPI TestClient handles it)
 
     payload = {
         "deviceidentifier": "test_device",
@@ -63,7 +75,8 @@ def test_recommendation_global_fallback():
 
 def test_recommendation_empty():
     # Reset mock to return None for everything
-    mock_redis.get.side_effect = lambda k: None
+    mock_redis.get.side_effect = None
+    mock_redis.get.return_value = None
     
     payload = {
         "deviceidentifier": "test_device",

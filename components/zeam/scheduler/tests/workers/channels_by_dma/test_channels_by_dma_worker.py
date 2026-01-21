@@ -92,9 +92,9 @@ class TestChannelsByDMAWorker:
 
         # Verify Redis storage
         assert len(mock_redis.stored_data) == 3
-        assert "channels:dma:501" in mock_redis.stored_data
-        assert "channels:dma:803" in mock_redis.stored_data
-        assert "channels:dma:602" in mock_redis.stored_data
+        assert "zeam-recommender:channels:dma:501" in mock_redis.stored_data
+        assert "zeam-recommender:channels:dma:803" in mock_redis.stored_data
+        assert "zeam-recommender:channels:dma:602" in mock_redis.stored_data
 
     def test_redis_data_structure(self, mock_redis, minimal_db_results):
         """Test that Redis data has correct structure."""
@@ -111,7 +111,7 @@ class TestChannelsByDMAWorker:
             worker.process()
 
         # Check first DMA data structure
-        stored_value, ttl = mock_redis.stored_data["channels:dma:501"]
+        stored_value, ttl = mock_redis.stored_data["zeam-recommender:channels:dma:501"]
         assert ttl == 60 * 60 * 25  # 25 hours
 
         import json
@@ -136,7 +136,7 @@ class TestChannelsByDMAWorker:
 
         assert result["dma_count"] == 1
         assert result["total_rows"] == 1
-        assert "channels:dma:999" in mock_redis.stored_data
+        assert "zeam-recommender:channels:dma:999" in mock_redis.stored_data
 
     def test_edge_case_empty_results(self, mock_redis):
         """Test with no results from database."""

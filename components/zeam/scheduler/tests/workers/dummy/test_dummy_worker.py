@@ -101,8 +101,8 @@ class TestDummyWorker:
         assert result["total_rows"] == 3
 
         # Verify Redis keys
-        assert "dummy:popularity:dma:501" in mock_redis.stored_data
-        assert "dummy:popularity:global" in mock_redis.stored_data
+        assert "zeam-recommender:dummy:popularity:dma:501" in mock_redis.stored_data
+        assert "zeam-recommender:dummy:popularity:global" in mock_redis.stored_data
 
     def test_dma_grouping(self, mock_redis, minimal_db_results):
         """Test that items are correctly grouped by DMA."""
@@ -119,7 +119,7 @@ class TestDummyWorker:
             worker.process()
 
         # Check DMA key
-        stored_value, ttl = mock_redis.stored_data["dummy:popularity:dma:501"]
+        stored_value, ttl = mock_redis.stored_data["zeam-recommender:dummy:popularity:dma:501"]
         assert ttl == 60 * 60 * 25  # 25 hours
 
         data = json.loads(stored_value)
@@ -142,7 +142,7 @@ class TestDummyWorker:
             worker.process()
 
         # Check global key
-        stored_value, ttl = mock_redis.stored_data["dummy:popularity:global"]
+        stored_value, ttl = mock_redis.stored_data["zeam-recommender:dummy:popularity:global"]
         data = json.loads(stored_value)
         assert len(data) == 1  # 1 item with dma_id=None
         assert data[0]["type"] == "vod"
@@ -163,8 +163,9 @@ class TestDummyWorker:
             result = worker.process()
 
         assert result["keys_updated"] == 1  # Only global key
-        assert "dummy:popularity:global" in mock_redis.stored_data
-        assert "dummy:popularity:dma:501" not in mock_redis.stored_data
+        assert result["keys_updated"] == 1  # Only global key
+        assert "zeam-recommender:dummy:popularity:global" in mock_redis.stored_data
+        assert "zeam-recommender:dummy:popularity:dma:501" not in mock_redis.stored_data
 
     def test_edge_case_single_dma(self, mock_redis, edge_case_single_dma):
         """Test with multiple items for single DMA."""
@@ -181,7 +182,8 @@ class TestDummyWorker:
             result = worker.process()
 
         assert result["keys_updated"] == 1
-        stored_value, _ = mock_redis.stored_data["dummy:popularity:dma:501"]
+        assert result["keys_updated"] == 1
+        stored_value, _ = mock_redis.stored_data["zeam-recommender:dummy:popularity:dma:501"]
         data = json.loads(stored_value)
         assert len(data) == 2  # Both items in same DMA
 
@@ -217,7 +219,9 @@ class TestDummyWorker:
 
             worker.process()
 
-        stored_value, _ = mock_redis.stored_data["dummy:popularity:dma:501"]
+            worker.process()
+        
+        stored_value, _ = mock_redis.stored_data["zeam-recommender:dummy:popularity:dma:501"]
         data = json.loads(stored_value)
 
         # Verify ContentItem structure

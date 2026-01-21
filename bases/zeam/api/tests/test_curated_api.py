@@ -14,7 +14,11 @@ mock_redis = AsyncMock()
 async def get_mock_redis():
     return mock_redis
 
-app.dependency_overrides[get_redis_client] = get_mock_redis
+@pytest.fixture(autouse=True)
+def override_redis_dependency():
+    app.dependency_overrides[get_redis_client] = get_mock_redis
+    yield
+    app.dependency_overrides = {}
 
 def test_curated_recommendation_explicit_dates():
     """Test curated recommendation with explicit dates provided."""
@@ -28,7 +32,7 @@ def test_curated_recommendation_explicit_dates():
     
     async def mock_get(key):
         # Redis Key: popularity:curated:{start_date}:{end_date}:{dma_id_or_global}
-        expected_key = "popularity:curated:2025-01-01:2025-01-07:123"
+        expected_key = "zeam-recommender:popularity:curated:2025-01-01:2025-01-07:123"
         if key == expected_key:
             import json
             return json.dumps(mock_data)
@@ -75,24 +79,11 @@ def test_curated_recommendation_defaults():
     last_call_key = calls[-1][0][0]
     parts = last_call_key.split(":")
     
-    assert parts[0] == "popularity"
-    assert parts[1] == "curated"
-    # parts[2] is start_date, parts[3] is end_date, parts[4] is suffix (global)
-    # The split might be tricky if date contains colons? Yes.
-    # Format: popularity:curated:YYYY-MM-DD HH:MM:SS:YYYY-MM-DD HH:MM:SS:global
-    # HH:MM:SS has colons.
-    
-    # Expected: 
-    # popularity
-    # curated
-    # YYYY-MM-DD HH
-    # MM
-    # SS
-    # YYYY-MM-DD HH
-    # ...
-    
-    # Let's just check it ends with "global" and starts with "popularity:curated:"
-    assert last_call_key.startswith("popularity:curated:")
+    assert parts[0] == "zeam-recommender"
+    assert parts[1] == "popularity"
+    assert parts[2] == "curated"
+
+    assert last_call_key.startswith("zeam-recommender:popularity:curated:")
     assert last_call_key.endswith(":global")
 
 def test_invalid_content_type():

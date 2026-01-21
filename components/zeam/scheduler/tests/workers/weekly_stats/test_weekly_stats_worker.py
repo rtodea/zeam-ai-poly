@@ -246,8 +246,9 @@ class TestWeeklyStatsWorker:
         # Check if Redis was updated
         if result["sections_count"] > 0:
             redis_key = result["redis_key"]
-            assert redis_key in mock_redis.stored_data
-            stored_value, ttl = mock_redis.stored_data[redis_key]
+            redis_key = result["redis_key"]
+            assert f"zeam-recommender:{redis_key}" in mock_redis.stored_data
+            stored_value, ttl = mock_redis.stored_data[f"zeam-recommender:{redis_key}"]
             assert ttl == 60 * 60 * 24 * 8  # 8 days
 
             # Verify JSON structure
