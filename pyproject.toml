@@ -29,6 +29,7 @@ members = [
     "components/zeam/celery_core",
     "components/zeam/redshift",
     "components/zeam/redis_client",
+    "components/zeam/analytics",
     "bases/zeam/api",
     "bases/zeam/worker",
     "bases/zeam/beat",

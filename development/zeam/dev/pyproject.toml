@@ -11,6 +11,7 @@ dependencies = [
     "zeam-celery-core",
     "zeam-redshift",
     "zeam-redis-client",
+    "zeam-analytics",
     "ipython>=9.9.0",
     "fastapi",
     "uvicorn",
@@ -26,6 +27,7 @@ zeam-popularity = { workspace = true }
 zeam-celery-core = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
+zeam-analytics = { workspace = true }
 zeam-api = { workspace = true }
 zeam-worker = { workspace = true }
 zeam-beat = { workspace = true }
@@ -49,3 +51,4 @@ project = "development"
 "../../../components/zeam/celery_core" = "zeam/celery_core"
 "../../../components/zeam/redshift" = "zeam/redshift"
 "../../../components/zeam/redis_client" = "zeam/redis_client"
+"../../../components/zeam/analytics" = "zeam/analytics"

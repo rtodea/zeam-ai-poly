@@ -18,6 +18,7 @@ dev-repl:
 
 test:
 	uv run --project development/zeam/dev pytest components/zeam/celery_core/tests
+	uv run --project development/zeam/dev pytest components/zeam/analytics/tests
 	uv run --project development/zeam/dev pytest bases/zeam/api/tests
 
 # Docker Build commands

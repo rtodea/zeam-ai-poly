@@ -1,16 +1,29 @@
 """
 Worker for calculating curated content popularity.
 """
+import json
 import logging
-from pathlib import Path
+import os
 from typing import Dict, Any, Optional
 
+import redis
 from zeam.celery_core.core import app
-from zeam.celery_core.workers.base_worker import BaseWorker
-from zeam.redshift.database import RedshiftConnection
+from zeam.analytics.curated_content import get_results
 
 logger = logging.getLogger(__name__)
 
+def get_redis_client() -> redis.Redis:
+    """Initialize Redis connection."""
+    redis_host = os.getenv("REDIS_HOST", "localhost")
+    redis_port = int(os.getenv("REDIS_PORT", "6379"))
+    redis_db = int(os.getenv("REDIS_DB", "0"))
+
+    return redis.Redis(
+        host=redis_host,
+        port=redis_port,
+        db=redis_db,
+        decode_responses=True
+    )
 
 @app.task(bind=True, name="workers.curated_content_popularity")
 def curated_content_popularity(self, start_date: str, end_date: str, dma_id: Optional[int] = None, item_count: int = 10) -> Dict[str, Any]:
@@ -23,13 +36,45 @@ def curated_content_popularity(self, start_date: str, end_date: str, dma_id: Opt
         dma_id: Optional DMA ID to filter by
         item_count: Number of items to return (default 10)
     """
-    worker = CuratedContentWorker()
     run_id = self.request.id
     task_name = "curated_content_popularity"
     
     try:
         logger.info(f"Starting {task_name} - Run ID: {run_id}")
-        result = worker.process(start_date, end_date, dma_id, item_count)
+        logger.info(f"Running curated_content_popularity for period {start_date} to {end_date}, DMA: {dma_id}, Limit: {item_count}")
+
+        # Execute query
+        rows = get_results(start_date, end_date, dma_id, item_count)
+        logger.info(f"Query returned {len(rows)} rows")
+
+        # Save to Redis
+        redis_key = ""
+        try:
+            # Extract only YYYY-MM-DD
+            start_date_key = start_date.split(' ')[0]
+            end_date_key = end_date.split(' ')[0]
+
+            dma_suffix = str(dma_id) if dma_id else "global"
+            redis_key = f"popularity:curated:{start_date_key}:{end_date_key}:{dma_suffix}"
+            
+            # Prefix as per BaseWorker behavior
+            prefixed_key = f"zeam-recommender:{redis_key}"
+
+            if rows:
+                redis_client = get_redis_client()
+                # 8 days TTL
+                ttl = 60 * 60 * 24 * 8
+                
+                # Store
+                data = json.dumps(rows)
+                redis_client.setex(prefixed_key, ttl, data)
+                logger.info(f"Stored data in Redis: {prefixed_key}")
+            else:
+                 logger.info("No rows returned, skipping Redis write.")
+
+        except Exception as e:
+            logger.error(f"Redis error: {e}")
+            raise
 
         return {
             "status": "success",
@@ -40,91 +85,10 @@ def curated_content_popularity(self, start_date: str, end_date: str, dma_id: Opt
                 "item_count": item_count
             },
             "run_id": run_id,
-            **result
+            "rows_count": len(rows),
+            "redis_key": redis_key,
         }
+
     except Exception as e:
         logger.error(f"Failed {task_name}: {str(e)}", exc_info=True)
         raise
-
-
-class CuratedContentWorker(BaseWorker):
-    """Worker for processing curated content popularity."""
-
-    def __init__(self):
-        super().__init__()
-        self.query_path = Path(__file__).parent.parent / "sql" / "curated_content_popularity.sql"
-
-    def process(self, start_date: str, end_date: str, dma_id: Optional[int] = None, item_count: int = 10) -> Dict[str, Any]:
-        """
-        Execute the curated content popularity query.
-
-        Args:
-            start_date: Start date string (YYYY-MM-DD HH:MM:SS)
-            end_date: End date string (YYYY-MM-DD HH:MM:SS)
-            dma_id: Optional DMA ID to filter by
-            item_count: Number of items to return (default 10)
-
-        Returns:
-            Dict with processing results
-        """
-        logger.info(f"Running CuratedContentWorker for period {start_date} to {end_date}, DMA: {dma_id}, Limit: {item_count}")
-
-        try:
-            query_content = self.query_path.read_text()
-        except FileNotFoundError:
-            logger.error(f"Query file not found at {self.query_path}")
-            raise
-
-        # Construct DMA filter and Join
-        dma_filter = ""
-        if dma_id:
-            dma_filter = f"AND log.dmaid = {dma_id}"
-
-        # Format the query
-        formatted_query = query_content.format(
-            start_date=start_date,
-            end_date=end_date,
-            limit=item_count,
-            dma_filter=dma_filter,
-        )
-
-        rows = []
-        try:
-            with RedshiftConnection() as conn:
-                logger.info("Executing curated content popularity query")
-                rows = conn.execute_query(formatted_query)
-                logger.info(f"Query returned {len(rows)} rows")
-        except Exception as e:
-            logger.error(f"Database error: {e}")
-            raise
-
-        # Save to Redis
-        # Key format: popularity:curated:{start_date}:{end_date}:{dma_id_or_global}
-        redis_key = ""
-        try:
-            # Extract only YYYY-MM-DD
-            start_date_key = start_date.split(' ')[0]
-            end_date_key = end_date.split(' ')[0]
-
-            dma_suffix = str(dma_id) if dma_id else "global"
-            redis_key = f"popularity:curated:{start_date_key}:{end_date_key}:{dma_suffix}"
-
-            if rows:
-                self.store_in_redis(redis_key, rows, ttl=60 * 60 * 24 * 8) # 8 days
-            else:
-                 logger.info("No rows returned, skipping Redis write.")
-
-        except Exception as e:
-            logger.error(f"Redis error: {e}")
-            raise
-
-        return {
-            "rows_count": len(rows),
-            "redis_key": redis_key,
-            "params": {
-                "start_date": start_date,
-                "end_date": end_date,
-                "dma_id": dma_id,
-                "item_count": item_count
-            }
-        }

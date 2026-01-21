@@ -10,6 +10,7 @@ members = [
     "popularity-flower",
     "popularity-worker",
     "zeam-ai-poly",
+    "zeam-analytics",
     "zeam-api",
     "zeam-beat",
     "zeam-celery-core",
@@ -300,6 +301,7 @@ dependencies = [
     { name = "pytest" },
     { name = "redis" },
     { name = "uvicorn" },
+    { name = "zeam-analytics" },
     { name = "zeam-api" },
     { name = "zeam-beat" },
     { name = "zeam-celery-core" },
@@ -318,6 +320,7 @@ requires-dist = [
     { name = "pytest", specifier = ">=8.0.0" },
     { name = "redis" },
     { name = "uvicorn" },
+    { name = "zeam-analytics", editable = "components/zeam/analytics" },
     { name = "zeam-api", editable = "bases/zeam/api" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
     { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
@@ -1394,6 +1397,25 @@ dev = [
 dev = [{ name = "polylith-cli", specifier = ">=1.40.0" }]
 
 [[package]]
+name = "zeam-analytics"
+version = "0.1.0"
+source = { editable = "components/zeam/analytics" }
+dependencies = [
+    { name = "zeam-redshift" },
+]
+
+[package.dev-dependencies]
+test = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "zeam-redshift", editable = "components/zeam/redshift" }]
+
+[package.metadata.requires-dev]
+test = [{ name = "pytest", specifier = ">=8.0.0" }]
+
+[[package]]
 name = "zeam-api"
 version = "0.1.0"
 source = { editable = "bases/zeam/api" }
@@ -1446,6 +1468,7 @@ dependencies = [
     { name = "flower" },
     { name = "pandas" },
     { name = "python-json-logger" },
+    { name = "zeam-analytics" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
@@ -1463,6 +1486,7 @@ requires-dist = [
     { name = "flower", specifier = ">=2.0.1" },
     { name = "pandas", specifier = ">=2.1.4" },
     { name = "python-json-logger", specifier = ">=2.0.7" },
+    { name = "zeam-analytics", editable = "components/zeam/analytics" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
