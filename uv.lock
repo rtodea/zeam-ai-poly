@@ -13,11 +13,11 @@ members = [
     "zeam-analytics",
     "zeam-api",
     "zeam-beat",
-    "zeam-celery-core",
     "zeam-popularity",
     "zeam-redis-client",
     "zeam-redshift",
     "zeam-worker",
+    "zeam-worker-registry",
 ]
 
 [[package]]
@@ -304,11 +304,11 @@ dependencies = [
     { name = "zeam-analytics" },
     { name = "zeam-api" },
     { name = "zeam-beat" },
-    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
     { name = "zeam-worker" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
@@ -323,11 +323,11 @@ requires-dist = [
     { name = "zeam-analytics", editable = "components/zeam/analytics" },
     { name = "zeam-api", editable = "bases/zeam/api" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [[package]]
@@ -757,9 +757,9 @@ dependencies = [
     { name = "redshift-connector" },
     { name = "uvicorn" },
     { name = "zeam-api" },
-    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redshift" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
@@ -771,9 +771,9 @@ requires-dist = [
     { name = "redshift-connector", specifier = ">=2.0.910" },
     { name = "uvicorn", specifier = ">=0.27.0" },
     { name = "zeam-api", editable = "bases/zeam/api" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [[package]]
@@ -783,14 +783,14 @@ source = { editable = "projects/popularity-beat" }
 dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "zeam-beat" },
-    { name = "zeam-celery-core" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [[package]]
@@ -800,20 +800,22 @@ source = { editable = "projects/popularity-flower" }
 dependencies = [
     { name = "flower" },
     { name = "redis" },
-    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
+    { name = "zeam-worker" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "flower", specifier = ">=2.0.1" },
     { name = "redis", specifier = ">=5.0.1" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker", editable = "bases/zeam/worker" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [[package]]
@@ -828,11 +830,11 @@ dependencies = [
     { name = "redis" },
     { name = "redshift-connector" },
     { name = "zeam-analytics" },
-    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
     { name = "zeam-worker" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
@@ -844,11 +846,11 @@ requires-dist = [
     { name = "redis", specifier = ">=5.0.1" },
     { name = "redshift-connector", specifier = ">=2.0.910" },
     { name = "zeam-analytics", editable = "components/zeam/analytics" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [[package]]
@@ -1419,10 +1421,10 @@ dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "fastapi" },
     { name = "pytest" },
-    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.dev-dependencies]
@@ -1435,10 +1437,10 @@ requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "fastapi", specifier = ">=0.109.0" },
     { name = "pytest", specifier = ">=8.0.0" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [package.metadata.requires-dev]
@@ -1450,29 +1452,14 @@ version = "0.1.0"
 source = { editable = "bases/zeam/beat" }
 dependencies = [
     { name = "celery", extra = ["redis"] },
-    { name = "zeam-celery-core" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
-
-[[package]]
-name = "zeam-celery-core"
-version = "0.1.0"
-source = { editable = "components/zeam/celery_core" }
-
-[package.dev-dependencies]
-test = [
-    { name = "pytest" },
-]
-
-[package.metadata]
-
-[package.metadata.requires-dev]
-test = [{ name = "pytest", specifier = ">=8.0.0" }]
 
 [[package]]
 name = "zeam-popularity"
@@ -1540,8 +1527,8 @@ dependencies = [
     { name = "pandas" },
     { name = "python-json-logger" },
     { name = "zeam-analytics" },
-    { name = "zeam-celery-core" },
     { name = "zeam-redis-client" },
+    { name = "zeam-worker-registry" },
 ]
 
 [package.metadata]
@@ -1550,6 +1537,21 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.1.4" },
     { name = "python-json-logger", specifier = ">=2.0.7" },
     { name = "zeam-analytics", editable = "components/zeam/analytics" },
-    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
+
+[[package]]
+name = "zeam-worker-registry"
+version = "0.1.0"
+source = { editable = "components/zeam/worker_registry" }
+
+[package.dev-dependencies]
+test = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+
+[package.metadata.requires-dev]
+test = [{ name = "pytest", specifier = ">=8.0.0" }]

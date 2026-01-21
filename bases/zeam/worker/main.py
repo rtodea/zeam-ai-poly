@@ -3,7 +3,7 @@ Celery Worker Application
 """
 import os
 from celery import Celery
-from zeam.celery_core.core import TaskNames # Verify registry import works
+from zeam.worker_registry.core import WorkerNames # Verify registry import works
 
 # Redis connection settings
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")

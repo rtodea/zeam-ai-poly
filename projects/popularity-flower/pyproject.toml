@@ -3,7 +3,8 @@ name = "popularity-flower"
 version = "0.1.0"
 description = "Flower Monitoring Project"
 dependencies = [
-    "zeam-celery-core",
+    "zeam-worker-registry",
+    "zeam-worker",
     "zeam-popularity",
     "flower>=2.0.1",
     "redis>=5.0.1",
@@ -13,7 +14,8 @@ dependencies = [
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-celery-core = { workspace = true }
+zeam-worker-registry = { workspace = true }
+zeam-worker = { workspace = true }
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
@@ -30,7 +32,8 @@ dev-mode-dirs = ["../../components", "../../bases"]
 project = "popularity-flower"
 
 [tool.polylith.bricks]
-"../../components/zeam/celery_core" = "zeam/celery_core"
+"../../components/zeam/worker_registry" = "zeam/worker_registry"
+"../../bases/zeam/worker" = "zeam/worker"
 "../../components/zeam/popularity" = "zeam/popularity"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/redis_client" = "zeam/redis_client"

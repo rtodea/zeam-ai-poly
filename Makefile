@@ -5,13 +5,13 @@ api-local:
 	uv run --project projects/popularity-api uvicorn zeam.api.main:app --reload --port $${SERVER_PORT:-7311}
 
 worker-local:
-	uv run --project projects/popularity-worker celery -A zeam.celery_core.core worker --loglevel=info
+	uv run --project projects/popularity-worker celery -A zeam.worker.main worker --loglevel=info
 
 beat-local:
-	uv run --project projects/popularity-beat celery -A zeam.celery_core.core beat --loglevel=info
+	uv run --project projects/popularity-beat celery -A zeam.beat.main beat --loglevel=info
 
 flower-local:
-	uv run --project projects/popularity-flower celery -A zeam.celery_core.core flower
+	uv run --project projects/popularity-flower celery -A zeam.worker.main flower
 
 dev-repl:
 	uv run --project development/zeam/dev ipython

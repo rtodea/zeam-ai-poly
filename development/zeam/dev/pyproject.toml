@@ -8,7 +8,7 @@ dependencies = [
     "zeam-worker",
     "zeam-beat",
     "zeam-popularity",
-    "zeam-celery-core",
+    "zeam-worker-registry",
     "zeam-redshift",
     "zeam-redis-client",
     "zeam-analytics",
@@ -24,7 +24,7 @@ requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-popularity = { workspace = true }
-zeam-celery-core = { workspace = true }
+zeam-worker-registry = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
 zeam-analytics = { workspace = true }
@@ -48,7 +48,7 @@ project = "development"
 "../../../bases/zeam/worker" = "zeam/worker"
 "../../../bases/zeam/beat" = "zeam/beat"
 "../../../components/zeam/popularity" = "zeam/popularity"
-"../../../components/zeam/celery_core" = "zeam/celery_core"
+"../../../components/zeam/worker_registry" = "zeam/worker_registry"
 "../../../components/zeam/redshift" = "zeam/redshift"
 "../../../components/zeam/redis_client" = "zeam/redis_client"
 "../../../components/zeam/analytics" = "zeam/analytics"

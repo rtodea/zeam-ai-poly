@@ -1,17 +1,10 @@
 [project]
-name = "zeam-celery-core"
+name = "zeam-worker-registry"
 version = "0.1.0"
-description = "Celery core logic"
+description = "Task Registry"
 dependencies = [
 ]
 requires-python = ">=3.12"
-
-[tool.uv.sources]
-zeam-popularity = { workspace = true }
-zeam-redshift = { workspace = true }
-zeam-redis-client = { workspace = true }
-zeam-analytics = { workspace = true }
-
 
 [build-system]
 requires = ["hatchling"]
@@ -21,7 +14,7 @@ build-backend = "hatchling.build"
 packages = []
 
 [tool.hatch.build.targets.wheel.force-include]
-"." = "zeam/celery_core"
+"." = "zeam/worker_registry"
 
 [dependency-groups]
 test = [
@@ -29,4 +22,4 @@ test = [
 ]
 
 [tool.polylith]
-brick = "component:celery_core"
+brick = "component:worker_registry"

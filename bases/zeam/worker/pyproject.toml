@@ -3,7 +3,7 @@ name = "zeam-worker"
 version = "0.1.0"
 description = "Worker Base"
 dependencies = [
-    "zeam-celery-core",
+    "zeam-worker-registry",
     "zeam-analytics",
     "zeam-redis-client",
     "celery[redis]>=5.4.0",
@@ -13,7 +13,7 @@ dependencies = [
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-celery-core = { workspace = true }
+zeam-worker-registry = { workspace = true }
 zeam-analytics = { workspace = true }
 zeam-redis-client = { workspace = true }
 

@@ -1,4 +1,4 @@
-from zeam.celery_core.core import app
+from zeam.worker.main import app
 import sys
 
 def main():

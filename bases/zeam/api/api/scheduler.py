@@ -3,6 +3,8 @@ from typing import Dict, Any
 from celery import Celery
 import os
 
+from zeam.worker_registry.core import WorkerNames
+
 router = APIRouter()
 
 # Create Celery app instance to send tasks
@@ -19,9 +21,7 @@ celery_app = Celery(
 
 # Map of worker names to their Celery task names
 TASK_NAMES: Dict[str, str] = {
-    "weekly_stats": "workers.weekly_stats_ingestion",
-    "channels_by_dma": "workers.channels_by_dma_ingestion",
-    "channel_stats": "workers.channel_stats_ingestion",
+
 }
 
 @router.post("/run/{worker_name}")
@@ -30,15 +30,14 @@ async def run_worker(worker_name: str):
     Trigger a Celery worker task by name.
     The task runs asynchronously via Celery.
     """
-    task_name = TASK_NAMES.get(worker_name)
-    if not task_name:
+    if worker_name not in WorkerNames:
         raise HTTPException(
             status_code=404,
-            detail=f"Worker '{worker_name}' not found. Available workers: {list(TASK_NAMES.keys())}"
+            detail=f"Worker '{worker_name}' not found. Available workers: {WorkerNames}"
         )
 
     # Send task to Celery via the message broker
-    result = celery_app.send_task(task_name)
+    result = celery_app.send_task(worker_name)
 
     return {
         "message": f"Worker '{worker_name}' triggered",

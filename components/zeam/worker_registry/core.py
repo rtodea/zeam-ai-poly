@@ -1,9 +1,9 @@
 """
-Task Registry for Celery tasks.
+Worker Registry for Celery tasks.
 This component is a lightweight contract shared between Scheduler and Worker.
 """
 
-class TaskNames:
+class WorkerNames:
     """
     Central repository for all Celery task names.
     Both the Scheduler and Worker must reference these constants.
