@@ -13,7 +13,7 @@ dependencies = [
     "pandas>=2.1.4",
     "python-json-logger>=2.0.7",
     "zeam-redshift",
-    "zeam-redis",
+    "zeam-redis-client",
 ]
 requires-python = ">=3.12"
 
@@ -22,7 +22,7 @@ zeam-worker = { workspace = true }
 zeam-scheduler = { workspace = true }
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
-zeam-redis = { workspace = true }
+zeam-redis-client = { workspace = true }
 
 
 [build-system]
@@ -40,5 +40,5 @@ project = "popularity-worker"
 "../../components/zeam/scheduler" = "zeam/scheduler"
 "../../components/zeam/popularity" = "zeam/popularity"
 "../../components/zeam/redshift" = "zeam/redshift"
-"../../components/zeam/redis" = "zeam/redis"
+"../../components/zeam/redis_client" = "zeam/redis_client"
 

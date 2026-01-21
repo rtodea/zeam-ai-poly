@@ -8,7 +8,7 @@ dependencies = [
     "zeam-popularity",
     "celery[redis]>=5.4.0",
     "zeam-redshift",
-    "zeam-redis",
+    "zeam-redis-client",
 ]
 requires-python = ">=3.12"
 
@@ -17,7 +17,7 @@ zeam-beat = { workspace = true }
 zeam-scheduler = { workspace = true }
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
-zeam-redis = { workspace = true }
+zeam-redis-client = { workspace = true }
 
 
 [build-system]
@@ -35,5 +35,5 @@ project = "popularity-beat"
 "../../components/zeam/scheduler" = "zeam/scheduler"
 "../../components/zeam/popularity" = "zeam/popularity"
 "../../components/zeam/redshift" = "zeam/redshift"
-"../../components/zeam/redis" = "zeam/redis"
+"../../components/zeam/redis_client" = "zeam/redis_client"
 

@@ -1,5 +1,5 @@
 [project]
-name = "zeam-redis"
+name = "zeam-redis-client"
 version = "0.1.0"
 description = "Redis client logic"
 dependencies = [
@@ -17,4 +17,4 @@ build-backend = "hatchling.build"
 packages = []
 
 [tool.hatch.build.targets.wheel.force-include]
-"." = "zeam/redis"
+"." = "zeam/redis_client"

@@ -11,14 +11,14 @@ dependencies = [
     "celery>=5.3.6",
     "zeam-popularity",
     "zeam-redshift",
-    "zeam-redis",
+    "zeam-redis-client",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
-zeam-redis = { workspace = true }
+zeam-redis-client = { workspace = true }
 
 
 [build-system]

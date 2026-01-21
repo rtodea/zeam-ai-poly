@@ -35,15 +35,8 @@ Each test uses **carefully crafted minimal data** that:
 ```
 tests/scheduler/workers/
 ├── README.md (this file)
-├── channels_by_dma/
-│   ├── README.md
-│   └── test_channels_by_dma_worker.py
-├── dummy/
-│   ├── README.md
-│   └── test_dummy_worker.py
-└── weekly_stats/
-    ├── README.md
-    └── test_weekly_stats_worker.py
+
+
 ```
 
 ## Running Tests

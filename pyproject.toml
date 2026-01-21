@@ -28,7 +28,7 @@ members = [
     "components/zeam/popularity",
     "components/zeam/scheduler",
     "components/zeam/redshift",
-    "components/zeam/redis",
+    "components/zeam/redis_client",
     "bases/zeam/api",
     "bases/zeam/worker",
     "bases/zeam/beat",

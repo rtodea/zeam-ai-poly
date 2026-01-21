@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from redis.asyncio import Redis
 
-from zeam.redis.client import get_redis_client
+from zeam.redis_client.client import get_redis_client
 
 router = APIRouter()
 

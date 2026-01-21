@@ -10,7 +10,7 @@ from zeam.popularity.domain.schemas import (
     ContentType,
     CuratedRecommendationRequest
 )
-from zeam.redis.client import get_redis_client
+from zeam.redis_client.client import get_redis_client
 from redis.asyncio import Redis
 
 router = APIRouter()

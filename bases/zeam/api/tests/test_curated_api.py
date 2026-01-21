@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, MagicMock
 from datetime import datetime, timedelta
 
 from zeam.api.main import app
-from zeam.redis.client import get_redis_client
+from zeam.redis_client.client import get_redis_client
 
 client = TestClient(app)
 

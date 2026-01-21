@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from redis.asyncio import Redis
 
 from zeam.redshift.database import RedshiftConnection
-from zeam.redis.client import get_redis_client
+from zeam.redis_client.client import get_redis_client
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
