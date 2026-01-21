@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "src"))
 
-from zeam.scheduler.workers.curated_content_worker import CuratedContentWorker
+from zeam.celery_core.workers.curated_content_worker import CuratedContentWorker
 
 @pytest.fixture
 def mock_redis():
@@ -39,7 +39,7 @@ class TestCuratedContentWorker:
         worker = CuratedContentWorker()
         worker.redis_client = mock_redis
         
-        with patch('zeam.scheduler.workers.curated_content_worker.RedshiftConnection') as mock_conn:
+        with patch('zeam.celery_core.workers.curated_content_worker.RedshiftConnection') as mock_conn:
             mock_conn_instance = MagicMock()
             mock_conn_instance.__enter__ = Mock(return_value=mock_conn_instance)
             mock_conn_instance.__exit__ = Mock(return_value=None)
@@ -73,7 +73,7 @@ class TestCuratedContentWorker:
         worker = CuratedContentWorker()
         worker.redis_client = mock_redis
         
-        with patch('zeam.scheduler.workers.curated_content_worker.RedshiftConnection') as mock_conn:
+        with patch('zeam.celery_core.workers.curated_content_worker.RedshiftConnection') as mock_conn:
             mock_conn_instance = MagicMock()
             mock_conn_instance.__enter__ = Mock(return_value=mock_conn_instance)
             mock_conn_instance.__exit__ = Mock(return_value=None)

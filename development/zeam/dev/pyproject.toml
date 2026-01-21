@@ -4,10 +4,11 @@ version = "0.1.0"
 description = "Development environment"
 dependencies = [
     "zeam-api",
+    "zeam-api",
     "zeam-worker",
     "zeam-beat",
     "zeam-popularity",
-    "zeam-scheduler",
+    "zeam-celery-core",
     "zeam-redshift",
     "zeam-redis-client",
     "ipython>=9.9.0",
@@ -22,7 +23,7 @@ requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-popularity = { workspace = true }
-zeam-scheduler = { workspace = true }
+zeam-celery-core = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
 zeam-api = { workspace = true }
@@ -45,6 +46,6 @@ project = "development"
 "../../../bases/zeam/worker" = "zeam/worker"
 "../../../bases/zeam/beat" = "zeam/beat"
 "../../../components/zeam/popularity" = "zeam/popularity"
-"../../../components/zeam/scheduler" = "zeam/scheduler"
+"../../../components/zeam/celery_core" = "zeam/celery_core"
 "../../../components/zeam/redshift" = "zeam/redshift"
 "../../../components/zeam/redis_client" = "zeam/redis_client"

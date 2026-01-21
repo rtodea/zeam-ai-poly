@@ -14,4 +14,4 @@ RUN uv sync --frozen --project projects/popularity-worker
 ENV PYTHONPATH=/app
 ENV PATH="/app/projects/popularity-worker/.venv/bin:$PATH"
 
-CMD ["uv", "run", "--project", "projects/popularity-worker", "celery", "-A", "zeam.scheduler.celery_app", "worker", "--loglevel=info"]
+CMD ["uv", "run", "--project", "projects/popularity-worker", "celery", "-A", "zeam.celery_core.core", "worker", "--loglevel=info"]

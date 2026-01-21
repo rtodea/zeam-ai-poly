@@ -3,7 +3,7 @@ name = "popularity-flower"
 version = "0.1.0"
 description = "Flower Monitoring Project"
 dependencies = [
-    "zeam-scheduler",
+    "zeam-celery-core",
     "zeam-popularity",
     "flower>=2.0.1",
     "redis>=5.0.1",
@@ -13,7 +13,7 @@ dependencies = [
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-scheduler = { workspace = true }
+zeam-celery-core = { workspace = true }
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
@@ -30,7 +30,7 @@ dev-mode-dirs = ["../../components", "../../bases"]
 project = "popularity-flower"
 
 [tool.polylith.bricks]
-"../../components/zeam/scheduler" = "zeam/scheduler"
+"../../components/zeam/celery_core" = "zeam/celery_core"
 "../../components/zeam/popularity" = "zeam/popularity"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/redis_client" = "zeam/redis_client"

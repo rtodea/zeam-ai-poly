@@ -16,4 +16,4 @@ EXPOSE 5555
 ENV PYTHONPATH=/app
 ENV PATH="/app/projects/popularity-flower/.venv/bin:$PATH"
 
-CMD ["uv", "run", "--project", "projects/popularity-flower", "celery", "-A", "zeam.scheduler.celery_app", "flower"]
+CMD ["uv", "run", "--project", "projects/popularity-flower", "celery", "-A", "zeam.celery_core.core", "flower"]

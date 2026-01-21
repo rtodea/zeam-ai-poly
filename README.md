@@ -47,7 +47,7 @@ zeam-ai-poly/
 ├── components/
 │   └── zeam/
 │       ├── popularity/  # Core domain logic & database access
-│       └── scheduler/   # Worker tasks & schedule config
+│       └── celery_core/      # Worker tasks & Celery core logic
 ├── projects/
 │   ├── popularity-api/     # Deployable API service
 │   ├── popularity-worker/  # Deployable Worker service
@@ -95,7 +95,7 @@ Inside the REPL, you can import any component:
 ```python
 from zeam.popularity.core import config
 from zeam.redshift import config as redshift_config
-from zeam.scheduler.workers.dummy_worker import DummyWorker
+from zeam.celery_core.workers.dummy_worker import DummyWorker
 
 
 worker = DummyWorker()
@@ -111,7 +111,7 @@ Run the test suite using `pytest`. This runs tests for all components and bases.
 make test
 
 # Or manually
-uv run --project development/zeam/dev pytest components/zeam/scheduler/tests
+uv run --project development/zeam/dev pytest components/zeam/celery_core/tests
 uv run --project development/zeam/dev pytest bases/zeam/api/tests
 ```
 

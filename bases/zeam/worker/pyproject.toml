@@ -3,12 +3,12 @@ name = "zeam-worker"
 version = "0.1.0"
 description = "Worker Base"
 dependencies = [
-    "zeam-scheduler",
+    "zeam-celery-core",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-scheduler = { workspace = true }
+zeam-celery-core = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

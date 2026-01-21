@@ -5,19 +5,19 @@ api-local:
 	uv run --project projects/popularity-api uvicorn zeam.api.main:app --reload --port $${SERVER_PORT:-7311}
 
 worker-local:
-	uv run --project projects/popularity-worker celery -A zeam.scheduler.celery_app worker --loglevel=info
+	uv run --project projects/popularity-worker celery -A zeam.celery_core.core worker --loglevel=info
 
 beat-local:
-	uv run --project projects/popularity-beat celery -A zeam.scheduler.celery_app beat --loglevel=info
+	uv run --project projects/popularity-beat celery -A zeam.celery_core.core beat --loglevel=info
 
 flower-local:
-	uv run --project projects/popularity-flower celery -A zeam.scheduler.celery_app flower
+	uv run --project projects/popularity-flower celery -A zeam.celery_core.core flower
 
 dev-repl:
 	uv run --project development/zeam/dev ipython
 
 test:
-	uv run --project development/zeam/dev pytest components/zeam/scheduler/tests
+	uv run --project development/zeam/dev pytest components/zeam/celery_core/tests
 	uv run --project development/zeam/dev pytest bases/zeam/api/tests
 
 # Docker Build commands

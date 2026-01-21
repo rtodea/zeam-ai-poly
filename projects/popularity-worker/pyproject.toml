@@ -3,8 +3,8 @@ name = "popularity-worker"
 version = "0.1.0"
 description = "Celery Worker Project"
 dependencies = [
+    "zeam-celery-core",
     "zeam-worker",
-    "zeam-scheduler",
     "zeam-popularity",
     "celery[redis]>=5.4.0",
     "redis>=5.0.1",
@@ -19,7 +19,7 @@ requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-worker = { workspace = true }
-zeam-scheduler = { workspace = true }
+zeam-celery-core = { workspace = true }
 zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
@@ -37,7 +37,7 @@ project = "popularity-worker"
 
 [tool.polylith.bricks]
 "../../bases/zeam/worker" = "zeam/worker"
-"../../components/zeam/scheduler" = "zeam/scheduler"
+"../../components/zeam/celery_core" = "zeam/celery_core"
 "../../components/zeam/popularity" = "zeam/popularity"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/redis_client" = "zeam/redis_client"

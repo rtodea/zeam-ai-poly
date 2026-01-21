@@ -5,8 +5,8 @@ import logging
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-from zeam.scheduler.celery_app import app
-from zeam.scheduler.workers.base_worker import BaseWorker
+from zeam.celery_core.core import app
+from zeam.celery_core.workers.base_worker import BaseWorker
 from zeam.redshift.database import RedshiftConnection
 
 logger = logging.getLogger(__name__)

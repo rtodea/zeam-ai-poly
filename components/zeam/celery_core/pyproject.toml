@@ -1,7 +1,7 @@
 [project]
-name = "zeam-scheduler"
+name = "zeam-celery-core"
 version = "0.1.0"
-description = "Scheduler logic"
+description = "Celery core logic"
 dependencies = [
     "zeam-popularity",
     "celery[redis]>=5.4.0",
@@ -29,7 +29,7 @@ build-backend = "hatchling.build"
 packages = []
 
 [tool.hatch.build.targets.wheel.force-include]
-"." = "zeam/scheduler"
+"." = "zeam/celery_core"
 
 [dependency-groups]
 test = [
@@ -37,4 +37,4 @@ test = [
 ]
 
 [tool.polylith]
-brick = "component:scheduler"
+brick = "component:celery_core"

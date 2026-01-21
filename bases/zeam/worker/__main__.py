@@ -1,4 +1,4 @@
-from zeam.scheduler.celery_app import app
+from zeam.celery_core.core import app
 import sys
 
 def main():

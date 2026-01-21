@@ -13,7 +13,7 @@ dependencies = [
     "redshift-connector>=2.0.910",
     "pydantic>=2.6.0",
     "zeam-redshift",
-    "zeam-redis-client",
+    "zeam-celery-core",
 ]
 requires-python = ">=3.12"
 
@@ -23,7 +23,7 @@ zeam-popularity = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
 
-
+zeam-celery-core = { workspace = true }
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -39,4 +39,4 @@ project = "popularity-api"
 "../../bases/zeam/api" = "zeam/api"
 "../../components/zeam/popularity" = "zeam/popularity"
 "../../components/zeam/redshift" = "zeam/redshift"
-"../../components/zeam/redis_client" = "zeam/redis_client"
+"../../components/zeam/celery_core" = "zeam/celery_core"

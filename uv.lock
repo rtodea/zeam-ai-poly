@@ -12,10 +12,10 @@ members = [
     "zeam-ai-poly",
     "zeam-api",
     "zeam-beat",
+    "zeam-celery-core",
     "zeam-popularity",
     "zeam-redis-client",
     "zeam-redshift",
-    "zeam-scheduler",
     "zeam-worker",
 ]
 
@@ -302,10 +302,10 @@ dependencies = [
     { name = "uvicorn" },
     { name = "zeam-api" },
     { name = "zeam-beat" },
+    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
-    { name = "zeam-scheduler" },
     { name = "zeam-worker" },
 ]
 
@@ -320,10 +320,10 @@ requires-dist = [
     { name = "uvicorn" },
     { name = "zeam-api", editable = "bases/zeam/api" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-scheduler", editable = "components/zeam/scheduler" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
 ]
 
@@ -754,8 +754,8 @@ dependencies = [
     { name = "redshift-connector" },
     { name = "uvicorn" },
     { name = "zeam-api" },
+    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
-    { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
 ]
 
@@ -768,8 +768,8 @@ requires-dist = [
     { name = "redshift-connector", specifier = ">=2.0.910" },
     { name = "uvicorn", specifier = ">=0.27.0" },
     { name = "zeam-api", editable = "bases/zeam/api" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
 ]
 
@@ -780,20 +780,20 @@ source = { editable = "projects/popularity-beat" }
 dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "zeam-beat" },
+    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
-    { name = "zeam-scheduler" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-scheduler", editable = "components/zeam/scheduler" },
 ]
 
 [[package]]
@@ -803,20 +803,20 @@ source = { editable = "projects/popularity-flower" }
 dependencies = [
     { name = "flower" },
     { name = "redis" },
+    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
-    { name = "zeam-scheduler" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "flower", specifier = ">=2.0.1" },
     { name = "redis", specifier = ">=5.0.1" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-scheduler", editable = "components/zeam/scheduler" },
 ]
 
 [[package]]
@@ -830,10 +830,10 @@ dependencies = [
     { name = "python-json-logger" },
     { name = "redis" },
     { name = "redshift-connector" },
+    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
-    { name = "zeam-scheduler" },
     { name = "zeam-worker" },
 ]
 
@@ -845,10 +845,10 @@ requires-dist = [
     { name = "python-json-logger", specifier = ">=2.0.7" },
     { name = "redis", specifier = ">=5.0.1" },
     { name = "redshift-connector", specifier = ">=2.0.910" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-scheduler", editable = "components/zeam/scheduler" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
 ]
 
@@ -1401,6 +1401,7 @@ dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "fastapi" },
     { name = "pytest" },
+    { name = "zeam-celery-core" },
     { name = "zeam-popularity" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
@@ -1416,6 +1417,7 @@ requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "fastapi", specifier = ">=0.109.0" },
     { name = "pytest", specifier = ">=8.0.0" },
+    { name = "zeam-celery-core", editable = "components/zeam/celery_core" },
     { name = "zeam-popularity", editable = "components/zeam/popularity" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
@@ -1429,11 +1431,45 @@ name = "zeam-beat"
 version = "0.1.0"
 source = { editable = "bases/zeam/beat" }
 dependencies = [
-    { name = "zeam-scheduler" },
+    { name = "zeam-celery-core" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "zeam-scheduler", editable = "components/zeam/scheduler" }]
+requires-dist = [{ name = "zeam-celery-core", editable = "components/zeam/celery_core" }]
+
+[[package]]
+name = "zeam-celery-core"
+version = "0.1.0"
+source = { editable = "components/zeam/celery_core" }
+dependencies = [
+    { name = "celery", extra = ["redis"] },
+    { name = "flower" },
+    { name = "pandas" },
+    { name = "python-json-logger" },
+    { name = "zeam-popularity" },
+    { name = "zeam-redis-client" },
+    { name = "zeam-redshift" },
+]
+
+[package.dev-dependencies]
+test = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "celery", specifier = ">=5.3.6" },
+    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
+    { name = "flower", specifier = ">=2.0.1" },
+    { name = "pandas", specifier = ">=2.1.4" },
+    { name = "python-json-logger", specifier = ">=2.0.7" },
+    { name = "zeam-popularity", editable = "components/zeam/popularity" },
+    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
+    { name = "zeam-redshift", editable = "components/zeam/redshift" },
+]
+
+[package.metadata.requires-dev]
+test = [{ name = "pytest", specifier = ">=8.0.0" }]
 
 [[package]]
 name = "zeam-popularity"
@@ -1493,46 +1529,12 @@ requires-dist = [
 ]
 
 [[package]]
-name = "zeam-scheduler"
-version = "0.1.0"
-source = { editable = "components/zeam/scheduler" }
-dependencies = [
-    { name = "celery", extra = ["redis"] },
-    { name = "flower" },
-    { name = "pandas" },
-    { name = "python-json-logger" },
-    { name = "zeam-popularity" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
-]
-
-[package.dev-dependencies]
-test = [
-    { name = "pytest" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "celery", specifier = ">=5.3.6" },
-    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
-    { name = "flower", specifier = ">=2.0.1" },
-    { name = "pandas", specifier = ">=2.1.4" },
-    { name = "python-json-logger", specifier = ">=2.0.7" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
-]
-
-[package.metadata.requires-dev]
-test = [{ name = "pytest", specifier = ">=8.0.0" }]
-
-[[package]]
 name = "zeam-worker"
 version = "0.1.0"
 source = { editable = "bases/zeam/worker" }
 dependencies = [
-    { name = "zeam-scheduler" },
+    { name = "zeam-celery-core" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "zeam-scheduler", editable = "components/zeam/scheduler" }]
+requires-dist = [{ name = "zeam-celery-core", editable = "components/zeam/celery_core" }]
