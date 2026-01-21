@@ -12,6 +12,8 @@ dependencies = [
     "pydantic>=2.6.0",
     "pandas>=2.1.4",
     "python-json-logger>=2.0.7",
+    "zeam-redshift",
+    "zeam-redis",
 ]
 requires-python = ">=3.12"
 
@@ -19,6 +21,9 @@ requires-python = ">=3.12"
 zeam-worker = { workspace = true }
 zeam-scheduler = { workspace = true }
 zeam-popularity = { workspace = true }
+zeam-redshift = { workspace = true }
+zeam-redis = { workspace = true }
+
 
 [build-system]
 requires = ["hatchling"]
@@ -34,3 +39,6 @@ project = "popularity-worker"
 "../../bases/zeam/worker" = "zeam/worker"
 "../../components/zeam/scheduler" = "zeam/scheduler"
 "../../components/zeam/popularity" = "zeam/popularity"
+"../../components/zeam/redshift" = "zeam/redshift"
+"../../components/zeam/redis" = "zeam/redis"
+

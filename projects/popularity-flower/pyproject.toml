@@ -7,12 +7,17 @@ dependencies = [
     "zeam-popularity",
     "flower>=2.0.1",
     "redis>=5.0.1",
+    "zeam-redshift",
+    "zeam-redis",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-scheduler = { workspace = true }
 zeam-popularity = { workspace = true }
+zeam-redshift = { workspace = true }
+zeam-redis = { workspace = true }
+
 
 [build-system]
 requires = ["hatchling"]
@@ -27,3 +32,6 @@ project = "popularity-flower"
 [tool.polylith.bricks]
 "../../components/zeam/scheduler" = "zeam/scheduler"
 "../../components/zeam/popularity" = "zeam/popularity"
+"../../components/zeam/redshift" = "zeam/redshift"
+"../../components/zeam/redis" = "zeam/redis"
+

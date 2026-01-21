@@ -27,6 +27,8 @@ module-root=""
 members = [
     "components/zeam/popularity",
     "components/zeam/scheduler",
+    "components/zeam/redshift",
+    "components/zeam/redis",
     "bases/zeam/api",
     "bases/zeam/worker",
     "bases/zeam/beat",

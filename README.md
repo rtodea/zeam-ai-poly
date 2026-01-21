@@ -94,7 +94,9 @@ Inside the REPL, you can import any component:
 
 ```python
 from zeam.popularity.core import config
+from zeam.redshift import config as redshift_config
 from zeam.scheduler.workers.dummy_worker import DummyWorker
+
 
 worker = DummyWorker()
 # worker.process()

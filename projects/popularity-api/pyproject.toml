@@ -12,12 +12,17 @@ dependencies = [
     "redis>=5.0.1",
     "redshift-connector>=2.0.910",
     "pydantic>=2.6.0",
+    "zeam-redshift",
+    "zeam-redis",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-api = { workspace = true }
 zeam-popularity = { workspace = true }
+zeam-redshift = { workspace = true }
+zeam-redis = { workspace = true }
+
 
 [build-system]
 requires = ["hatchling"]
@@ -33,3 +38,5 @@ project = "popularity-api"
 [tool.polylith.bricks]
 "../../bases/zeam/api" = "zeam/api"
 "../../components/zeam/popularity" = "zeam/popularity"
+"../../components/zeam/redshift" = "zeam/redshift"
+"../../components/zeam/redis" = "zeam/redis"

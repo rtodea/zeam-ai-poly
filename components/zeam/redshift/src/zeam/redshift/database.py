@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List, Optional
 import redshift_connector
-from zeam.popularity.core.config import settings
+from zeam.redshift.config import settings
 
 # #region agent log
 from pathlib import Path as _Path
@@ -43,10 +43,6 @@ class RedshiftConnection:
 
         if not all([self.host, self.database, self.user, self.password]):
             # It's possible some might be None if not set in env or passed
-            # Depending on how strict we want to be. The collector raises ValueError.
-            # We can check here or let connect() fail.
-            # Given we want to align, let's keep it similar but maybe less aggressive until connect?
-            # Or replicate the check.
             pass
 
     def _is_connection_closed(self) -> bool:

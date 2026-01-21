@@ -1,5 +1,5 @@
 import redis.asyncio as redis
-from zeam.popularity.core.config import settings
+from zeam.redis.config import settings
 
 async def get_redis_client() -> redis.Redis:
     return redis.Redis(
@@ -9,4 +9,3 @@ async def get_redis_client() -> redis.Redis:
         password=settings.REDIS_PASSWORD,
         decode_responses=True
     )
-

@@ -7,6 +7,8 @@ dependencies = [
     "redshift-connector>=2.0.910",
     "redis>=5.0.1",
     "pydantic>=2.6.0",
+    "zeam-redshift",
+    "zeam-redis",
 ]
 requires-python = ">=3.12"
 
@@ -16,6 +18,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeam"]
+
+[tool.uv.sources]
+zeam-redshift = { workspace = true }
+zeam-redis = { workspace = true }
+
 
 [tool.polylith]
 brick = "component:popularity"

@@ -7,7 +7,7 @@ from typing import Dict, Any, Optional
 
 from zeam.scheduler.celery_app import app
 from zeam.scheduler.workers.base_worker import BaseWorker
-from zeam.popularity.core.database import RedshiftConnection
+from zeam.redshift.database import RedshiftConnection
 
 logger = logging.getLogger(__name__)
 

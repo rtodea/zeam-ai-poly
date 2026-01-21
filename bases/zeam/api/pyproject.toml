@@ -7,11 +7,15 @@ dependencies = [
     "fastapi>=0.109.0",
     "celery[redis]>=5.4.0",
     "pytest>=8.0.0",
+    "zeam-redshift",
+    "zeam-redis",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-popularity = { workspace = true }
+zeam-redshift = { workspace = true }
+zeam-redis = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

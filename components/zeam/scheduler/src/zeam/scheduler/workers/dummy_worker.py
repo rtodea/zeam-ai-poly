@@ -12,7 +12,7 @@ from zeam.scheduler.celery_app import app
 from zeam.scheduler.workers.base_worker import BaseWorker
 
 # Import existing infrastructure
-from zeam.popularity.core.database import RedshiftConnection
+from zeam.redshift.database import RedshiftConnection
 from zeam.popularity.domain.schemas import ContentItem, ContentType
 
 logger = logging.getLogger(__name__)
