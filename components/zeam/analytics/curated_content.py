@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
-from zeam.redshift.database import RedshiftConnection
+from zeam.redshift import execute_query
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ def get_curated_content_sql(start_date: str, end_date: str, dma_id: Optional[int
     return formatted_query
 
 
-def get_results(start_date: str, end_date: str, dma_id: Optional[int] = None, limit: int = 10, connection: Optional[RedshiftConnection] = None) -> List[Dict[str, Any]]:
+def get_results(start_date: str, end_date: str, dma_id: Optional[int] = None, limit: int = 10) -> List[Dict[str, Any]]:
     """
     Executes the curated content popularity query and returns the results.
     
@@ -41,15 +41,10 @@ def get_results(start_date: str, end_date: str, dma_id: Optional[int] = None, li
         end_date: End date string
         dma_id: Optional DMA ID
         limit: Number of items limit
-        connection: Optional existing RedshiftConnection to use. If None, a new one is created.
         
     Returns:
         List of result rows.
     """
     query = get_curated_content_sql(start_date, end_date, dma_id, limit)
     
-    if connection:
-        return connection.execute_query(query)
-    
-    with RedshiftConnection() as conn:
-        return conn.execute_query(query)
+    return execute_query(query)

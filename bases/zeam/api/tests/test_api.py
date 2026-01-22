@@ -27,8 +27,8 @@ def test_health_check():
 
 
 def test_health_connections():
-    with patch("zeam.api.api.health.RedshiftConnection") as mock_conn:
-        mock_conn.return_value.__enter__.return_value.execute_query.return_value = []
+    with patch("zeam.api.api.health.execute_query") as mock_query:
+        mock_query.return_value = []
         response = client.get("/api/health/connections")
         assert response.status_code == 200
         # Redis is mocked to ok, Redshift is mocked to ok

@@ -1,18 +1,10 @@
 """Redshift database connection and query utilities."""
 
 from typing import Any, Dict, List, Optional
+
 import redshift_connector
 from zeam.redshift.config import settings
 
-# #region agent log
-from pathlib import Path as _Path
-from datetime import datetime as _dt
-import json as _json
-_DEBUG_LOG_PATH = _Path("/tmp/debug.log")
-def _debug_log(hypothesis_id, location, message, data=None):
-    entry = {"hypothesisId": hypothesis_id, "location": location, "message": message, "data": data or {}, "timestamp": _dt.now().isoformat(), "sessionId": "debug-session"}
-    with open(_DEBUG_LOG_PATH, "a") as f: f.write(_json.dumps(entry) + "\n")
-# #endregion
 
 class RedshiftConnection:
     """Manages connections to Redshift database."""
@@ -164,6 +156,31 @@ class RedshiftConnection:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Context manager exit."""
         self.close()
+
+def execute_query(query: str, params: Optional[tuple] = None) -> List[Dict[str, Any]]:
+    """Execute a query and return results as list of dictionaries.
+    
+    Args:
+        query: SQL query to execute
+        params: Optional query parameters
+        
+    Returns:
+        List of dictionaries representing query results
+    """
+    with RedshiftConnection() as conn:
+        return conn.execute_query(query, params)
+
+
+def execute_command(command: str, params: Optional[tuple] = None) -> None:
+    """Execute a command (UPDATE, INSERT, DELETE, etc).
+    
+    Args:
+        command: SQL command to execute
+        params: Optional command parameters
+    """
+    with RedshiftConnection() as conn:
+        conn.execute_query(command, params)
+
 
 def get_db():
     """Dependency for getting a database connection.

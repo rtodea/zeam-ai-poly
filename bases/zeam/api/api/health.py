@@ -4,7 +4,7 @@ import logging
 from fastapi import APIRouter, Depends
 from redis.asyncio import Redis
 
-from zeam.redshift.database import RedshiftConnection
+from zeam.redshift import execute_query
 from zeam.redis_client.client import get_redis_client
 
 router = APIRouter()
@@ -30,8 +30,7 @@ async def health_connections(redis: Redis = Depends(get_redis_client)):
 
     # Redshift/Postgres: connect + SELECT 1
     try:
-        with RedshiftConnection() as conn:
-            conn.execute_query("SELECT 1")
+        execute_query("SELECT 1")
         redshift_status = "ok"
     except Exception as e:
         logger.warning("Database health check failed: %s", e)

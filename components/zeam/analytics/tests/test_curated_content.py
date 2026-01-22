@@ -9,13 +9,10 @@ import sys
 
 from zeam.analytics.curated_content import get_curated_content_sql, get_results
 
-@patch('zeam.analytics.curated_content.RedshiftConnection')
-def test_get_results_sql_formatting(mock_conn_cls):
+@patch('zeam.analytics.curated_content.execute_query')
+def test_get_results_sql_formatting(mock_query):
     """Test get_results formats query correctly."""
-    mock_conn = MagicMock()
-    mock_conn.__enter__.return_value = mock_conn
-    mock_conn_cls.return_value = mock_conn
-    mock_conn.execute_query.return_value = []
+    mock_query.return_value = []
 
     get_results(
         start_date="2024-01-01 00:00:00",
@@ -24,25 +21,22 @@ def test_get_results_sql_formatting(mock_conn_cls):
         limit=5
     )
     
-    executed_query = mock_conn.execute_query.call_args[0][0]
+    executed_query = mock_query.call_args[0][0]
     assert "LIMIT 5" in executed_query
     assert "log.dmaid = 123" in executed_query
     assert "'2024-01-01 00:00:00'" in executed_query
 
-@patch('zeam.analytics.curated_content.RedshiftConnection')
-def test_get_results_without_dma(mock_conn_cls):
+@patch('zeam.analytics.curated_content.execute_query')
+def test_get_results_without_dma(mock_query):
     """Test get_results without DMA."""
-    mock_conn = MagicMock()
-    mock_conn.__enter__.return_value = mock_conn
-    mock_conn_cls.return_value = mock_conn
-    mock_conn.execute_query.return_value = []
+    mock_query.return_value = []
 
     get_results(
         start_date="2024-01-01 00:00:00",
         end_date="2024-01-07 23:59:59"
     )
     
-    executed_query = mock_conn.execute_query.call_args[0][0]
+    executed_query = mock_query.call_args[0][0]
     assert "media_channel.dma_id =" not in executed_query
     assert "log.dmaid =" not in executed_query
 
