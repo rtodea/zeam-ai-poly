@@ -14,6 +14,7 @@ flower-local:
 	uv run --project projects/popularity-flower celery -A zeam.worker.main flower
 
 dev-repl:
+	@uv sync --quiet
 	uv run --project development/zeam/dev ipython
 
 test:
