@@ -1,0 +1,42 @@
+[project]
+name = "recommender-service"
+version = "0.1.0"
+description = "Zeam Recommender Service API"
+authors = [{ name = "Robert", email = "robert@zeam.ai" }]
+dependencies = [
+    "zeam-api",
+    "zeam-config",
+    "fastapi>=0.109.0",
+    "uvicorn>=0.27.0",
+    "pydantic-settings>=2.1.0",
+    "redis>=5.0.1",
+    "redshift-connector>=2.0.910",
+    "pydantic>=2.6.0",
+    "zeam-redshift",
+    "zeam-worker-registry",
+]
+requires-python = ">=3.12"
+
+[tool.uv.sources]
+zeam-api = { workspace = true }
+zeam-config = { workspace = true }
+zeam-redshift = { workspace = true }
+zeam-redis-client = { workspace = true }
+
+zeam-worker-registry = { workspace = true }
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+dev-mode-dirs = ["../../components", "../../bases"]
+
+[tool.polylith]
+project = "recommender-service"
+
+
+[tool.polylith.bricks]
+"../../bases/zeam/api" = "zeam/api"
+"../../components/zeam/config" = "zeam/config"
+"../../components/zeam/redshift" = "zeam/redshift"
+"../../components/zeam/worker_registry" = "zeam/worker_registry"

@@ -1,0 +1,33 @@
+[project]
+name = "recommender-background-service-scheduler"
+version = "0.1.0"
+description = "Zeam Recommender Background Service Scheduler"
+dependencies = [
+    "zeam-beat",
+    "zeam-worker-registry",
+    "celery[redis]>=5.4.0",
+]
+requires-python = ">=3.12"
+
+[tool.uv.sources]
+zeam-beat = { workspace = true }
+zeam-worker-registry = { workspace = true }
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+dev-mode-dirs = ["../../components", "../../bases"]
+
+[tool.polylith]
+project = "recommender-background-service-scheduler"
+
+[tool.polylith.bricks]
+"../../bases/zeam/beat" = "zeam/beat"
+"../../components/zeam/worker_registry" = "zeam/worker_registry"
+"../../components/zeam/config" = "zeam/config"
+"../../components/zeam/redshift" = "zeam/redshift"
+"../../components/zeam/redis_client" = "zeam/redis_client"
+
