@@ -1,19 +1,14 @@
 """
 Celery Worker Application
 """
-import os
 from celery import Celery
 from zeam.worker_registry.core import WorkerNames # Verify registry import works
-
-# Redis connection settings
-REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-REDIS_PORT = os.getenv("REDIS_PORT", "6379")
-REDIS_DB = os.getenv("REDIS_DB", "0")
+from zeam.redis_client.config import settings as redis_settings
 
 app = Celery(
     "zeam.worker",
-    broker=f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}",
-    backend=f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}",
+    broker=f"redis://{redis_settings.REDIS_HOST}:{redis_settings.REDIS_PORT}/{redis_settings.REDIS_DB}",
+    backend=f"redis://{redis_settings.REDIS_HOST}:{redis_settings.REDIS_PORT}/{redis_settings.REDIS_DB}",
     include=["zeam.worker.tasks"]
 )
 
