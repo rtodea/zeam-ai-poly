@@ -5,10 +5,10 @@ requires-python = ">=3.12"
 [manifest]
 members = [
     "dev",
-    "popularity-api",
-    "popularity-beat",
-    "popularity-flower",
-    "popularity-worker",
+    "recommender-background-service-monitor",
+    "recommender-background-service-scheduler",
+    "recommender-background-service-worker",
+    "recommender-service",
     "zeam-ai-poly",
     "zeam-analytics",
     "zeam-api",
@@ -746,114 +746,6 @@ wheels = [
 ]
 
 [[package]]
-name = "popularity-api"
-version = "0.1.0"
-source = { editable = "projects/popularity-api" }
-dependencies = [
-    { name = "fastapi" },
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-    { name = "redis" },
-    { name = "redshift-connector" },
-    { name = "uvicorn" },
-    { name = "zeam-api" },
-    { name = "zeam-config" },
-    { name = "zeam-redshift" },
-    { name = "zeam-worker-registry" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "fastapi", specifier = ">=0.109.0" },
-    { name = "pydantic", specifier = ">=2.6.0" },
-    { name = "pydantic-settings", specifier = ">=2.1.0" },
-    { name = "redis", specifier = ">=5.0.1" },
-    { name = "redshift-connector", specifier = ">=2.0.910" },
-    { name = "uvicorn", specifier = ">=0.27.0" },
-    { name = "zeam-api", editable = "bases/zeam/api" },
-    { name = "zeam-config", editable = "components/zeam/config" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
-]
-
-[[package]]
-name = "popularity-beat"
-version = "0.1.0"
-source = { editable = "projects/popularity-beat" }
-dependencies = [
-    { name = "celery", extra = ["redis"] },
-    { name = "zeam-beat" },
-    { name = "zeam-worker-registry" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
-    { name = "zeam-beat", editable = "bases/zeam/beat" },
-    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
-]
-
-[[package]]
-name = "popularity-flower"
-version = "0.1.0"
-source = { editable = "projects/popularity-flower" }
-dependencies = [
-    { name = "flower" },
-    { name = "redis" },
-    { name = "zeam-config" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
-    { name = "zeam-worker" },
-    { name = "zeam-worker-registry" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "flower", specifier = ">=2.0.1" },
-    { name = "redis", specifier = ">=5.0.1" },
-    { name = "zeam-config", editable = "components/zeam/config" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-worker", editable = "bases/zeam/worker" },
-    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
-]
-
-[[package]]
-name = "popularity-worker"
-version = "0.1.0"
-source = { editable = "projects/popularity-worker" }
-dependencies = [
-    { name = "celery", extra = ["redis"] },
-    { name = "pandas" },
-    { name = "pydantic" },
-    { name = "python-json-logger" },
-    { name = "redis" },
-    { name = "redshift-connector" },
-    { name = "zeam-analytics" },
-    { name = "zeam-config" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
-    { name = "zeam-worker" },
-    { name = "zeam-worker-registry" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
-    { name = "pandas", specifier = ">=2.1.4" },
-    { name = "pydantic", specifier = ">=2.6.0" },
-    { name = "python-json-logger", specifier = ">=2.0.7" },
-    { name = "redis", specifier = ">=5.0.1" },
-    { name = "redshift-connector", specifier = ">=2.0.910" },
-    { name = "zeam-analytics", editable = "components/zeam/analytics" },
-    { name = "zeam-config", editable = "components/zeam/config" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-worker", editable = "bases/zeam/worker" },
-    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
-]
-
-[[package]]
 name = "prometheus-client"
 version = "0.24.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1100,6 +992,114 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/da/92/1446574745d74df0c92e6aa4a7b0b3130706a4142b2d1a5869f2eaa423c6/pyyaml-6.0.3-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:16249ee61e95f858e83976573de0f5b2893b3677ba71c9dd36b9cf8be9ac6d65", size = 829923, upload-time = "2025-09-25T21:32:54.537Z" },
     { url = "https://files.pythonhosted.org/packages/f0/7a/1c7270340330e575b92f397352af856a8c06f230aa3e76f86b39d01b416a/pyyaml-6.0.3-cp314-cp314t-win_amd64.whl", hash = "sha256:4ad1906908f2f5ae4e5a8ddfce73c320c2a1429ec52eafd27138b7f1cbe341c9", size = 174062, upload-time = "2025-09-25T21:32:55.767Z" },
     { url = "https://files.pythonhosted.org/packages/f1/12/de94a39c2ef588c7e6455cfbe7343d3b2dc9d6b6b2f40c4c6565744c873d/pyyaml-6.0.3-cp314-cp314t-win_arm64.whl", hash = "sha256:ebc55a14a21cb14062aa4162f906cd962b28e2e9ea38f9b4391244cd8de4ae0b", size = 149341, upload-time = "2025-09-25T21:32:56.828Z" },
+]
+
+[[package]]
+name = "recommender-background-service-monitor"
+version = "0.1.0"
+source = { editable = "projects/recommender-background-service-monitor" }
+dependencies = [
+    { name = "flower" },
+    { name = "redis" },
+    { name = "zeam-config" },
+    { name = "zeam-redis-client" },
+    { name = "zeam-redshift" },
+    { name = "zeam-worker" },
+    { name = "zeam-worker-registry" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "flower", specifier = ">=2.0.1" },
+    { name = "redis", specifier = ">=5.0.1" },
+    { name = "zeam-config", editable = "components/zeam/config" },
+    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
+    { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker", editable = "bases/zeam/worker" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
+]
+
+[[package]]
+name = "recommender-background-service-scheduler"
+version = "0.1.0"
+source = { editable = "projects/recommender-background-service-scheduler" }
+dependencies = [
+    { name = "celery", extra = ["redis"] },
+    { name = "zeam-beat" },
+    { name = "zeam-worker-registry" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
+    { name = "zeam-beat", editable = "bases/zeam/beat" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
+]
+
+[[package]]
+name = "recommender-background-service-worker"
+version = "0.1.0"
+source = { editable = "projects/recommender-background-service-worker" }
+dependencies = [
+    { name = "celery", extra = ["redis"] },
+    { name = "pandas" },
+    { name = "pydantic" },
+    { name = "python-json-logger" },
+    { name = "redis" },
+    { name = "redshift-connector" },
+    { name = "zeam-analytics" },
+    { name = "zeam-config" },
+    { name = "zeam-redis-client" },
+    { name = "zeam-redshift" },
+    { name = "zeam-worker" },
+    { name = "zeam-worker-registry" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
+    { name = "pandas", specifier = ">=2.1.4" },
+    { name = "pydantic", specifier = ">=2.6.0" },
+    { name = "python-json-logger", specifier = ">=2.0.7" },
+    { name = "redis", specifier = ">=5.0.1" },
+    { name = "redshift-connector", specifier = ">=2.0.910" },
+    { name = "zeam-analytics", editable = "components/zeam/analytics" },
+    { name = "zeam-config", editable = "components/zeam/config" },
+    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
+    { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker", editable = "bases/zeam/worker" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
+]
+
+[[package]]
+name = "recommender-service"
+version = "0.1.0"
+source = { editable = "projects/recommender-service" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "redis" },
+    { name = "redshift-connector" },
+    { name = "uvicorn" },
+    { name = "zeam-api" },
+    { name = "zeam-config" },
+    { name = "zeam-redshift" },
+    { name = "zeam-worker-registry" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastapi", specifier = ">=0.109.0" },
+    { name = "pydantic", specifier = ">=2.6.0" },
+    { name = "pydantic-settings", specifier = ">=2.1.0" },
+    { name = "redis", specifier = ">=5.0.1" },
+    { name = "redshift-connector", specifier = ">=2.0.910" },
+    { name = "uvicorn", specifier = ">=0.27.0" },
+    { name = "zeam-api", editable = "bases/zeam/api" },
+    { name = "zeam-config", editable = "components/zeam/config" },
+    { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
 [[package]]

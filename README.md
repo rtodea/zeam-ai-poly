@@ -12,11 +12,11 @@ It helps us build modular, reusable, and testable code by separating logic from 
 
 *   **Workspace**: The monorepo containing all your code (`zeam-ai-poly`).
 *   **Components**: The building blocks. They contain the business logic and are completely decoupled from each other (except via interfaces).
-    *   *Example*: `zeam.popularity` (core logic), `zeam.scheduler` (worker logic).
+    *   *Example*: `zeam.analytics` (SQL-based analytics), `zeam.worker_registry` (logic for curated content).
 *   **Bases**: The entry points. They expose the components to the outside world (e.g., via a CLI, HTTP API, or Lambda). They contain very little logic, mostly just wiring.
     *   *Example*: `zeam.api` (FastAPI), `zeam.worker` (Celery Worker).
 *   **Projects**: The deployable artifacts. Projects combine **bases** and **components** into a specific service configuration (e.g., a `pyproject.toml` that lists dependencies).
-    *   *Example*: `projects/popularity-api` builds the API service.
+    *   *Example*: `projects/recommender-service` builds the API service.
 *   **Development**: A special project (usually `development/zeam/dev`) that includes ALL components and bases, allowing you to work on the entire system in a single REPL/editor environment without context switching.
 
 ### Polylith CLI
@@ -33,7 +33,7 @@ uv run poly info
 
 This will show you a matrix of which components and bases are used in which projects.
 
-> **Note**: `poly info` visualizes dependencies based on **source code imports**. Since our deployable projects (e.g., `projects/popularity-api`) are configuration-only wrappers that rely on `pyproject.toml` dependencies, they may appear with empty dependencies (`-`) in the matrix. This is expected. The actual dependencies are enforced by `uv` during the build process.
+> **Note**: `poly info` visualizes dependencies based on **source code imports**. Since our deployable projects (e.g., `projects/recommender-service`) are configuration-only wrappers that rely on `pyproject.toml` dependencies, they may appear with empty dependencies (`-`) in the matrix. This is expected. The actual dependencies are enforced by `uv` during the build process.
 
 ## Project Structure
 
@@ -46,12 +46,16 @@ zeam-ai-poly/
 │       └── beat/        # Celery Beat entry point
 ├── components/
 │   └── zeam/
-│       ├── popularity/  # Core domain logic & database access
-│       └── celery_core/      # Worker tasks & Celery core logic
+│       ├── analytics/       # SQL queries and analytics logic
+│       ├── worker_registry/ # Curated content logic
+│       ├── redis_client/    # Shared Redis client
+│       ├── redshift/        # Database access logic
+│       └── config/          # Shared configuration
 ├── projects/
-│   ├── popularity-api/     # Deployable API service
-│   ├── popularity-worker/  # Deployable Worker service
-│   └── ...
+│   ├── recommender-service/                    # Deployable API service
+│   ├── recommender-background-service-worker/  # Deployable Worker service
+│   ├── recommender-background-service-scheduler/ # Deployable Beat service
+│   └── recommender-background-service-monitor/ # Deployable Flower service
 ├── development/
 │   └── zeam/
 │       └── dev/         # Development sandbox (REPL)
@@ -93,13 +97,12 @@ uv run --project development/zeam/dev ipython
 Inside the REPL, you can import any component:
 
 ```python
+from zeam.analytics import curated_content
+from zeam.redis_client import get_json
+from zeam.worker_registry import core as worker_core
 
-from zeam.popularity import core
-from zeam.redshift import config as redshift_config
-from zeam.celery_core.workers.dummy_worker import DummyWorker
-
-worker = DummyWorker()
-# worker.process()
+# Example: Get curated content from Redis
+# content = await get_json("some-key")
 ```
 
 ### Running Tests
@@ -111,7 +114,7 @@ Run the test suite using `pytest`. This runs tests for all components and bases.
 make test
 
 # Or manually
-uv run --project development/zeam/dev pytest components/zeam/celery_core/tests
+uv run --project development/zeam/dev pytest components/zeam/analytics/tests
 uv run --project development/zeam/dev pytest bases/zeam/api/tests
 ```
 
@@ -128,10 +131,10 @@ make build
 ```
 
 This commands builds:
-*   `popularity-api:latest`
-*   `popularity-worker:latest`
-*   `popularity-beat:latest`
-*   `popularity-flower:latest`
+*   `recommender-service:latest`
+*   `recommender-background-service-worker:latest`
+*   `recommender-background-service-scheduler:latest`
+*   `recommender-background-service-monitor:latest`
 
 ### Run Services Locally
 
@@ -155,10 +158,10 @@ make run-flower
 **Using uv (Native):**
 **Run API:**
 ```bash
-uv run --project projects/popularity-api uvicorn zeam.api.main:app --reload
+uv run --project projects/recommender-service uvicorn zeam.api.main:app --reload
 ```
 
 **Run Worker:**
 ```bash
-uv run --project projects/popularity-worker python -m zeam.worker
+uv run --project projects/recommender-background-service-worker python -m zeam.worker
 ```

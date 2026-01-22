@@ -36,10 +36,10 @@ members = [
     "bases/zeam/api",
     "bases/zeam/worker",
     "bases/zeam/beat",
-    "projects/popularity-api",
-    "projects/popularity-worker",
-    "projects/popularity-beat",
-    "projects/popularity-flower",
+    "projects/recommender-service",
+    "projects/recommender-background-service-worker",
+    "projects/recommender-background-service-scheduler",
+    "projects/recommender-background-service-monitor",
     "development/zeam/dev",
 ]
 
