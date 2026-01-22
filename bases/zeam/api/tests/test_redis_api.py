@@ -8,7 +8,18 @@ client = TestClient(app)
 @pytest.fixture
 def mock_redis():
     with patch("zeam.api.api.redis.async_client_context") as mock_context:
-        mock_redis_client = AsyncMock()
+        mock_redis_client = MagicMock()
+        mock_redis_client.dbsize = AsyncMock()
+        mock_redis_client.info = AsyncMock()
+        mock_redis_client.scan_iter = MagicMock()
+        mock_redis_client.type = AsyncMock()
+        mock_redis_client.get = AsyncMock()
+        mock_redis_client.hgetall = AsyncMock()
+        mock_redis_client.lrange = AsyncMock()
+        mock_redis_client.smembers = AsyncMock()
+        mock_redis_client.zrange = AsyncMock()
+        mock_redis_client.delete = AsyncMock()
+
         mock_context.return_value.__aenter__.return_value = mock_redis_client
         yield mock_redis_client
 
@@ -35,8 +46,7 @@ def test_list_redis_keys(mock_redis):
     
     # We use a regular MagicMock for scan_iter because it's NOT a coroutine,
     # it's a normal method that returns an async iterator.
-    mock_redis.scan_iter = MagicMock()
-
+    
     async def mock_scan_iter(match=None):
         for k in keys:
             if match is None or match.replace("*", "") in k:
@@ -52,8 +62,6 @@ def test_list_redis_keys(mock_redis):
 def test_list_redis_keys_limit(mock_redis):
     keys = [f"key:{i}" for i in range(10)]
     
-    mock_redis.scan_iter = MagicMock()
-
     async def mock_scan_iter(match=None):
         for k in keys:
             yield k
@@ -77,7 +85,7 @@ def test_list_redis_keys_error(mock_redis):
     ("string", "val", "val"),
     ("hash", {"field": "value"}, {"field": "value"}),
     ("list", ["item1", "item2"], ["item1", "item2"]),
-    ("set", {"member1", "member2"}, ["member1", "member2"]),
+    ("set", ["member1", "member2"], ["member1", "member2"]),
     ("zset", [("m1", 1.0), ("m2", 2.0)], [["m1", 1.0], ["m2", 2.0]]),
     ("unknown", None, {"type": "unknown"}),
 ])
@@ -91,7 +99,9 @@ def test_get_redis_key_types(mock_redis, key_type, redis_value, expected_respons
     elif key_type == "list":
         mock_redis.lrange.return_value = redis_value
     elif key_type == "set":
-        mock_redis.smembers.return_value = redis_value
+        # Sort if it's a list (which we use to simulate the set members)
+        # In the actual code, it's sorted(list(members))
+        mock_redis.smembers.return_value = sorted(redis_value) if isinstance(redis_value, list) else redis_value
     elif key_type == "zset":
         mock_redis.zrange.return_value = redis_value
 

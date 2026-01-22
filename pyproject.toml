@@ -43,5 +43,11 @@ members = [
     "development/zeam/dev",
 ]
 
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:ssl.SSLContext\\(\\) without protocol argument is deprecated:DeprecationWarning:redshift_connector.core",
+    "ignore:ssl.PROTOCOL_TLS is deprecated:DeprecationWarning:redshift_connector.core",
+]
+
 
 
