@@ -8,7 +8,7 @@ import uvicorn
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="API for Popularity Recommendations",
+    description="API for Zeam Recommender Service",
     version="1.0.0",
 )
 
@@ -19,7 +19,7 @@ app.include_router(scheduler_router, prefix="/api/scheduler")
 
 @app.get("/")
 async def root():
-    return {"message": "Popularity Recommender Service"}
+    return {"message": "Zeam Recommender Service"}
 
 if __name__ == "__main__":
     # Start a development server that respects SERVER_PORT environment variable
