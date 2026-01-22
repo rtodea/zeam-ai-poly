@@ -1,4 +1,4 @@
-.PHONY: api-local worker-local beat-local flower-local dev-repl build test
+.PHONY: api-local worker-local beat-local flower-local dev-repl build test clean
 
 # Development commands
 api-local:
@@ -54,4 +54,11 @@ run-flower:
 
 redis-local:
 	docker run --rm -d --name zeam-redis -p 127.0.0.1:6379:6379 redis:latest
+
+clean:
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type f -name "*.py[co]" -delete
+	find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	find . -type d -name ".ipynb_checkpoints" -exec rm -rf {} +
+	find . -type f -name ".coverage" -delete
 	

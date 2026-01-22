@@ -177,3 +177,7 @@ def get_db():
         yield conn
     finally:
         conn.close()
+
+def health_check():
+    execute_query("SELECT 1")
+    return True
