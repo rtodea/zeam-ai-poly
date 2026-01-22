@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, Any, Optional
 from zeam.analytics.curated_content import get_results
-from zeam.redis_client.client import store_json_data
+from zeam.redis_client import set_json
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +29,7 @@ def run_curated_content_task(start_date: str, end_date: str, dma_id: Optional[in
 
     # Save to Redis
     redis_key = get_curated_content_redis_key(start_date, end_date, dma_id)
-    store_json_data(redis_key, rows)
+    set_json(redis_key, rows)
 
     return {
         "status": "success",

@@ -1,24 +1,10 @@
 import pytest
 from unittest.mock import patch
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock
 
 from zeam.api.main import app
-from zeam.redis_client.client import get_redis_client
 
 client = TestClient(app)
-
-# Mock Redis client
-mock_redis = AsyncMock()
-
-async def get_mock_redis():
-    return mock_redis
-
-@pytest.fixture(autouse=True)
-def override_redis_dependency():
-    app.dependency_overrides[get_redis_client] = get_mock_redis
-    yield
-    app.dependency_overrides = {}
 
 def test_health_check():
     response = client.get("/api/health")
@@ -27,14 +13,18 @@ def test_health_check():
 
 
 def test_health_connections():
-    with patch("zeam.api.api.health.execute_query") as mock_query:
+    with patch("zeam.api.api.health.execute_query") as mock_query, \
+         patch("zeam.api.api.health.ping") as mock_ping:
         mock_query.return_value = []
+        mock_ping.return_value = True
+        
         response = client.get("/api/health/connections")
         assert response.status_code == 200
         # Redis is mocked to ok, Redshift is mocked to ok
         assert response.json() == {"redis": "ok", "redshift": "ok"}
 
-def test_recommendation_global_fallback():
+@patch("zeam.api.api.v1.recommend.get_json")
+def test_recommendation_global_fallback(mock_get_json):
     # Setup mock
     # When checking specific DMA key, return None
     # When checking Global key, return data
@@ -49,14 +39,11 @@ def test_recommendation_global_fallback():
     
     async def mock_get(key):
         if key == "zeam-recommender:popularity:global":
-            import json
-            return json.dumps(mock_data)
+            return mock_data
         return None
         
-    mock_redis.get.side_effect = mock_get
+    mock_get_json.side_effect = mock_get
     
-    # Ensure correct event loop handling if needed (FastAPI TestClient handles it)
-
     payload = {
         "deviceidentifier": "test_device",
         "islocalized": True,
@@ -70,10 +57,10 @@ def test_recommendation_global_fallback():
     assert len(data["channels"]) == 1
     assert data["channels"][0]["id"] == "123"
 
-def test_recommendation_empty():
+@patch("zeam.api.api.v1.recommend.get_json")
+def test_recommendation_empty(mock_get_json):
     # Reset mock to return None for everything
-    mock_redis.get.side_effect = None
-    mock_redis.get.return_value = None
+    mock_get_json.return_value = None
     
     payload = {
         "deviceidentifier": "test_device",

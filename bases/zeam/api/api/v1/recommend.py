@@ -10,17 +10,15 @@ from zeam.api.schemas import (
     ContentType,
     CuratedRecommendationRequest
 )
-from zeam.redis_client.client import get_redis_client
+from zeam.redis_client import get_json
 from zeam.worker_registry.curated_content import get_curated_content_redis_key
-from redis.asyncio import Redis
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
 @router.post("/recommend", response_model=RecommendationResponse)
 async def get_recommendations(
-    request: RecommendationRequest,
-    redis: Redis = Depends(get_redis_client)
+    request: RecommendationRequest
 ):
     """
     Get popular content recommendations based on user context.
@@ -40,9 +38,8 @@ async def get_recommendations(
     used_key = None
     
     for key in keys_to_try:
-        data = await redis.get(key)
-        if data:
-            items_data = json.loads(data)
+        items_data = await get_json(key)
+        if items_data:
             used_key = key
             break
             
@@ -79,8 +76,7 @@ async def get_recommendations(
 @router.post("/recommend/{content_type}", response_model=CuratedRecommendationResponse)
 async def get_content_recommendations(
     content_type: str,
-    request: CuratedRecommendationRequest,
-    redis: Redis = Depends(get_redis_client)
+    request: CuratedRecommendationRequest
 ):
     """
     Get recommendations for a specific content type.
@@ -119,14 +115,8 @@ async def get_content_recommendations(
     
     logger.info(f"Fetching curated content from key: {redis_key}")
     
-    data = await redis.get(redis_key)
-    if not data:
-        return CuratedRecommendationResponse()
-        
-    try:
-        items_data = json.loads(data)
-    except json.JSONDecodeError:
-        logger.error(f"Failed to decode data from {redis_key}")
+    items_data = await get_json(redis_key)
+    if not items_data:
         return CuratedRecommendationResponse()
 
     response = CuratedRecommendationResponse()

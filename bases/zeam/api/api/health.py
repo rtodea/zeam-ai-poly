@@ -2,10 +2,8 @@ import asyncio
 import logging
 
 from fastapi import APIRouter, Depends
-from redis.asyncio import Redis
-
 from zeam.redshift import execute_query
-from zeam.redis_client.client import get_redis_client
+from zeam.redis_client import ping
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -17,13 +15,13 @@ async def health_check():
 
 
 @router.get("/connections")
-async def health_connections(redis: Redis = Depends(get_redis_client)):
+async def health_connections():
     redis_status = "error"
     redshift_status = "error"
 
     # Redis: ping with a short timeout
     try:
-        await asyncio.wait_for(redis.ping(), timeout=1.0)
+        await asyncio.wait_for(ping(), timeout=1.0)
         redis_status = "ok"
     except Exception as e:
         logger.warning("Redis health check failed: %s", e)

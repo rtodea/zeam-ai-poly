@@ -1,26 +1,14 @@
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import patch
 from datetime import datetime, timedelta
 
 from zeam.api.main import app
-from zeam.redis_client.client import get_redis_client
 
 client = TestClient(app)
 
-# Mock Redis client
-mock_redis = AsyncMock()
-
-async def get_mock_redis():
-    return mock_redis
-
-@pytest.fixture(autouse=True)
-def override_redis_dependency():
-    app.dependency_overrides[get_redis_client] = get_mock_redis
-    yield
-    app.dependency_overrides = {}
-
-def test_curated_recommendation_explicit_dates():
+@patch("zeam.api.api.v1.recommend.get_json")
+def test_curated_recommendation_explicit_dates(mock_get_json):
     """Test curated recommendation with explicit dates provided."""
     mock_data = [
         {
@@ -34,11 +22,10 @@ def test_curated_recommendation_explicit_dates():
         # Redis Key: popularity:curated:{start_date}:{end_date}:{dma_id_or_global}
         expected_key = "zeam-recommender:popularity:curated:2025-01-01:2025-01-07:123"
         if key == expected_key:
-            import json
-            return json.dumps(mock_data)
+            return mock_data
         return None
         
-    mock_redis.get.side_effect = mock_get
+    mock_get_json.side_effect = mock_get
     
     payload = {
         "start_date": "2025-01-01 00:00:00",
@@ -54,10 +41,10 @@ def test_curated_recommendation_explicit_dates():
     assert len(data["items"]) == 1
     assert data["items"][0]["title"] == "Curated Show"
 
-def test_curated_recommendation_defaults():
+@patch("zeam.api.api.v1.recommend.get_json")
+def test_curated_recommendation_defaults(mock_get_json):
     """Test defaults for dates and global fallback."""
-    mock_redis.get.side_effect = None
-    mock_redis.get.return_value = None # Reset
+    mock_get_json.return_value = None # Reset
     
     request_start = None
     request_end = None
@@ -72,7 +59,7 @@ def test_curated_recommendation_defaults():
     response = client.post("/api/v1/recommend/curated", json=payload)
     assert response.status_code == 200
     
-    calls = mock_redis.get.call_args_list
+    calls = mock_get_json.call_args_list
     assert len(calls) > 0
     
     # Check key format
