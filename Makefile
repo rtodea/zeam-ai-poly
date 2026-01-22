@@ -1,4 +1,4 @@
-	.PHONY: api-local worker-local beat-local flower-local dev-repl build test clean sync
+.PHONY: api-local worker-local beat-local flower-local dev-repl build test clean sync
 
 # Development commands
 api-local:
