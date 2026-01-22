@@ -53,9 +53,9 @@ zeam-ai-poly/
 │       └── config/          # Shared configuration
 ├── projects/
 │   ├── recommender-service/                    # Deployable API service
-│   ├── recommender-background-service-worker/  # Deployable Worker service
-│   ├── recommender-background-service-scheduler/ # Deployable Beat service
-│   └── recommender-background-service-monitor/ # Deployable Flower service
+│   ├── recommender-worker/                     # Deployable Worker service
+│   ├── recommender-scheduler/                  # Deployable Beat service
+│   └── recommender-monitor/                    # Deployable Flower service
 ├── development/
 │   └── zeam/
 │       └── dev/         # Development sandbox (REPL)
@@ -132,9 +132,9 @@ make build
 
 This commands builds:
 *   `recommender-service:latest`
-*   `recommender-background-service-worker:latest`
-*   `recommender-background-service-scheduler:latest`
-*   `recommender-background-service-monitor:latest`
+*   `recommender-worker:latest`
+*   `recommender-scheduler:latest`
+*   `recommender-monitor:latest`
 
 ### Run Services Locally
 
@@ -163,5 +163,5 @@ uv run --project projects/recommender-service uvicorn zeam.api.main:app --reload
 
 **Run Worker:**
 ```bash
-uv run --project projects/recommender-background-service-worker python -m zeam.worker
+uv run --project projects/recommender-worker python -m zeam.worker
 ```

@@ -1,7 +1,7 @@
 [project]
-name = "recommender-background-service-scheduler"
+name = "recommender-scheduler"
 version = "0.1.0"
-description = "Zeam Recommender Background Service Scheduler"
+description = "Zeam Recommender Scheduler"
 dependencies = [
     "zeam-beat",
     "zeam-worker-registry",
@@ -22,7 +22,7 @@ build-backend = "hatchling.build"
 dev-mode-dirs = ["../../components", "../../bases"]
 
 [tool.polylith]
-project = "recommender-background-service-scheduler"
+project = "recommender-scheduler"
 
 [tool.polylith.bricks]
 "../../bases/zeam/beat" = "zeam/beat"

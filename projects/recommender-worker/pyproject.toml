@@ -1,21 +1,27 @@
 [project]
-name = "recommender-background-service-monitor"
+name = "recommender-worker"
 version = "0.1.0"
-description = "Zeam Recommender Background Service Monitor (Flower)"
+description = "Zeam Recommender Worker"
 dependencies = [
     "zeam-worker-registry",
     "zeam-worker",
+    "zeam-analytics",
     "zeam-config",
-    "flower>=2.0.1",
+    "celery[redis]>=5.4.0",
     "redis>=5.0.1",
+    "redshift-connector>=2.0.910",
+    "pydantic>=2.6.0",
+    "pandas>=2.1.4",
+    "python-json-logger>=2.0.7",
     "zeam-redshift",
     "zeam-redis-client",
 ]
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-worker-registry = { workspace = true }
 zeam-worker = { workspace = true }
+zeam-analytics = { workspace = true }
+zeam-worker-registry = { workspace = true }
 zeam-config = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
@@ -29,11 +35,11 @@ build-backend = "hatchling.build"
 dev-mode-dirs = ["../../components", "../../bases"]
 
 [tool.polylith]
-project = "recommender-background-service-monitor"
+project = "recommender-worker"
 
 [tool.polylith.bricks]
-"../../components/zeam/worker_registry" = "zeam/worker_registry"
 "../../bases/zeam/worker" = "zeam/worker"
+"../../components/zeam/worker_registry" = "zeam/worker_registry"
 "../../components/zeam/config" = "zeam/config"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/redis_client" = "zeam/redis_client"

@@ -37,9 +37,9 @@ members = [
     "bases/zeam/worker",
     "bases/zeam/beat",
     "projects/recommender-service",
-    "projects/recommender-background-service-worker",
-    "projects/recommender-background-service-scheduler",
-    "projects/recommender-background-service-monitor",
+    "projects/recommender-worker",
+    "projects/recommender-scheduler",
+    "projects/recommender-monitor",
     "development/zeam/dev",
 ]
 

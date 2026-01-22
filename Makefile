@@ -5,13 +5,13 @@ api-local:
 	uv run --project projects/recommender-service uvicorn zeam.api.main:app --reload --port $${SERVER_PORT:-7311}
 
 worker-local:
-	uv run --project projects/recommender-background-service-worker celery -A zeam.worker.main worker --loglevel=info
+	uv run --project projects/recommender-worker celery -A zeam.worker.main worker --loglevel=info
 
 beat-local:
-	uv run --project projects/recommender-background-service-scheduler celery -A zeam.beat.main beat --loglevel=info
+	uv run --project projects/recommender-scheduler celery -A zeam.beat.main beat --loglevel=info
 
 flower-local:
-	uv run --project projects/recommender-background-service-monitor celery -A zeam.worker.main flower
+	uv run --project projects/recommender-monitor celery -A zeam.worker.main flower
 
 repl:
 	@uv sync --quiet
@@ -32,13 +32,13 @@ build-api:
 	docker build -t zeam-recommender-service -f projects/recommender-service/Dockerfile .
 
 build-worker:
-	docker build -t zeam-recommender-background-service-worker -f projects/recommender-background-service-worker/Dockerfile .
+	docker build -t zeam-recommender-worker -f projects/recommender-worker/Dockerfile .
 
 build-beat:
-	docker build -t zeam-recommender-background-service-scheduler -f projects/recommender-background-service-scheduler/Dockerfile .
+	docker build -t zeam-recommender-scheduler -f projects/recommender-scheduler/Dockerfile .
 
 build-flower:
-	docker build -t zeam-recommender-background-service-monitor -f projects/recommender-background-service-monitor/Dockerfile .
+	docker build -t zeam-recommender-monitor -f projects/recommender-monitor/Dockerfile .
 
 # Docker Run commands
 docker-run-all: run-api run-worker run-beat run-flower redis-local
@@ -47,13 +47,13 @@ run-api:
 	docker run --rm --env-file .env -p 7311:7311 zeam-recommender-service
 
 run-worker:
-	docker run --rm --env-file .env zeam-recommender-background-service-worker
+	docker run --rm --env-file .env zeam-recommender-worker
 
 run-beat:
-	docker run --rm --env-file .env zeam-recommender-background-service-scheduler
+	docker run --rm --env-file .env zeam-recommender-scheduler
 
 run-flower:
-	docker run --rm --env-file .env -p 5555:5555 zeam-recommender-background-service-monitor
+	docker run --rm --env-file .env -p 5555:5555 zeam-recommender-monitor
 
 redis-local:
 	docker run --rm -d --name zeam-redis -p 127.0.0.1:6379:6379 redis:latest

@@ -5,10 +5,10 @@ requires-python = ">=3.12"
 [manifest]
 members = [
     "dev",
-    "recommender-background-service-monitor",
-    "recommender-background-service-scheduler",
-    "recommender-background-service-worker",
+    "recommender-monitor",
+    "recommender-scheduler",
     "recommender-service",
+    "recommender-worker",
     "zeam-ai-poly",
     "zeam-analytics",
     "zeam-api",
@@ -995,9 +995,9 @@ wheels = [
 ]
 
 [[package]]
-name = "recommender-background-service-monitor"
+name = "recommender-monitor"
 version = "0.1.0"
-source = { editable = "projects/recommender-background-service-monitor" }
+source = { editable = "projects/recommender-monitor" }
 dependencies = [
     { name = "flower" },
     { name = "redis" },
@@ -1020,9 +1020,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "recommender-background-service-scheduler"
+name = "recommender-scheduler"
 version = "0.1.0"
-source = { editable = "projects/recommender-background-service-scheduler" }
+source = { editable = "projects/recommender-scheduler" }
 dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "zeam-beat" },
@@ -1033,41 +1033,6 @@ dependencies = [
 requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
-    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
-]
-
-[[package]]
-name = "recommender-background-service-worker"
-version = "0.1.0"
-source = { editable = "projects/recommender-background-service-worker" }
-dependencies = [
-    { name = "celery", extra = ["redis"] },
-    { name = "pandas" },
-    { name = "pydantic" },
-    { name = "python-json-logger" },
-    { name = "redis" },
-    { name = "redshift-connector" },
-    { name = "zeam-analytics" },
-    { name = "zeam-config" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
-    { name = "zeam-worker" },
-    { name = "zeam-worker-registry" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
-    { name = "pandas", specifier = ">=2.1.4" },
-    { name = "pydantic", specifier = ">=2.6.0" },
-    { name = "python-json-logger", specifier = ">=2.0.7" },
-    { name = "redis", specifier = ">=5.0.1" },
-    { name = "redshift-connector", specifier = ">=2.0.910" },
-    { name = "zeam-analytics", editable = "components/zeam/analytics" },
-    { name = "zeam-config", editable = "components/zeam/config" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
-    { name = "zeam-worker", editable = "bases/zeam/worker" },
     { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
@@ -1099,6 +1064,41 @@ requires-dist = [
     { name = "zeam-api", editable = "bases/zeam/api" },
     { name = "zeam-config", editable = "components/zeam/config" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
+]
+
+[[package]]
+name = "recommender-worker"
+version = "0.1.0"
+source = { editable = "projects/recommender-worker" }
+dependencies = [
+    { name = "celery", extra = ["redis"] },
+    { name = "pandas" },
+    { name = "pydantic" },
+    { name = "python-json-logger" },
+    { name = "redis" },
+    { name = "redshift-connector" },
+    { name = "zeam-analytics" },
+    { name = "zeam-config" },
+    { name = "zeam-redis-client" },
+    { name = "zeam-redshift" },
+    { name = "zeam-worker" },
+    { name = "zeam-worker-registry" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
+    { name = "pandas", specifier = ">=2.1.4" },
+    { name = "pydantic", specifier = ">=2.6.0" },
+    { name = "python-json-logger", specifier = ">=2.0.7" },
+    { name = "redis", specifier = ">=5.0.1" },
+    { name = "redshift-connector", specifier = ">=2.0.910" },
+    { name = "zeam-analytics", editable = "components/zeam/analytics" },
+    { name = "zeam-config", editable = "components/zeam/config" },
+    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
+    { name = "zeam-redshift", editable = "components/zeam/redshift" },
+    { name = "zeam-worker", editable = "bases/zeam/worker" },
     { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
 
