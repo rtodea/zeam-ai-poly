@@ -98,10 +98,6 @@ class RedshiftConnection:
         conn = self.connect()
         cursor = conn.cursor()
         
-        # #region agent log
-        _debug_log("A,C", "database.py:execute_query_entry", "Entering execute_query", {"query_preview": query[:150] if query else "None", "has_params": params is not None})
-        # #endregion
-        
         try:
             # Split query into individual statements
             # This is a basic split that handles multiple statements separated by semicolons
@@ -124,10 +120,6 @@ class RedshiftConnection:
                 
                 # Only fetch results for the last statement if it has a result set
                 if is_last:
-                    # #region agent log
-                    _debug_log("A,C", "database.py:after_execute", "After cursor.execute (last statement)", {"has_description": cursor.description is not None, "description_len": len(cursor.description) if cursor.description else 0})
-                    # #endregion
-                    
                     if cursor.description is not None:
                         columns = [desc[0] for desc in cursor.description]
                         rows = cursor.fetchall()
@@ -135,15 +127,8 @@ class RedshiftConnection:
                     else:
                         results = []
             
-            # #region agent log
-            _debug_log("A", "database.py:execute_query_success", "Query executed successfully", {"rows_count": len(results)})
-            # #endregion
-            
             return results
         except Exception as e:
-            # #region agent log
-            _debug_log("A,C", "database.py:execute_query_error", "Error in execute_query", {"error": str(e), "error_type": type(e).__name__})
-            # #endregion
             raise
         finally:
             cursor.close()
