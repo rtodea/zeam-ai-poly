@@ -2,7 +2,6 @@
 Celery Worker Application
 """
 from celery import Celery
-from zeam.worker_registry.core import WorkerNames # Verify registry import works
 from zeam.redis_client.config import settings as redis_settings
 
 app = Celery(

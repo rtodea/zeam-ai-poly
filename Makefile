@@ -5,13 +5,13 @@ api-local:
 	uv run --project projects/recommender-service uvicorn zeam.api.main:app --reload --port $${SERVER_PORT:-7311}
 
 worker-local:
-	uv run --project projects/recommender-worker celery -A zeam.worker.main worker --loglevel=info
+	PYTHONPATH=bases:components uv run --project projects/recommender-worker celery -A zeam.worker.main worker --loglevel=info
 
 beat-local:
-	uv run --project projects/recommender-scheduler celery -A zeam.beat.main beat --loglevel=info
+	PYTHONPATH=bases:components uv run --project projects/recommender-scheduler celery -A zeam.beat.main beat --loglevel=info
 
 flower-local:
-	uv run --project projects/recommender-monitor celery -A zeam.worker.main flower
+	PYTHONPATH=bases:components uv run --project projects/recommender-monitor celery -A zeam.worker.main flower
 
 repl:
 	@uv sync --quiet

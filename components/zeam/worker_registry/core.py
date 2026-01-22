@@ -9,3 +9,8 @@ class WorkerNames:
     Both the Scheduler and Worker must reference these constants.
     """
     CURATED_CONTENT_POPULARITY = "workers.curated_content_popularity"
+
+
+WORKER_NAMES = [
+    WorkerNames.CURATED_CONTENT_POPULARITY,
+]
