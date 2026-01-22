@@ -1,15 +1,15 @@
-import json
 import logging
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Depends, HTTPException
+
+from fastapi import APIRouter, HTTPException
 from zeam.api.schemas import (
     RecommendationRequest,
     RecommendationResponse,
     CuratedRecommendationResponse,
     ContentItem,
-    ContentType,
     CuratedRecommendationRequest
 )
+
 from zeam.redis_client import get_json
 from zeam.worker_registry.curated_content import get_curated_content_redis_key
 
@@ -23,54 +23,10 @@ async def get_recommendations(
     """
     Get popular content recommendations based on user context.
     """
-    # Logic: 
-    # 1. Try to find specific popularity list for DMA
-    # 2. Fallback to global popularity
-    
-    keys_to_try = []
-    
-    if request.dmaid:
-        keys_to_try.append(f"zeam-recommender:popularity:dma:{request.dmaid}")
-    
-    keys_to_try.append("zeam-recommender:popularity:global")
-    
-    items_data = None
-    used_key = None
-    
-    for key in keys_to_try:
-        items_data = await get_json(key)
-        if items_data:
-            used_key = key
-            break
-            
-    if not items_data:
-        # Fallback to empty response if nothing found (or global missing)
-        logger.warning("No popularity data found in Redis")
-        return RecommendationResponse()
-    
-    # items_data is a list of dicts (ContentItem)
-    # We need to segregate them into the response buckets
-    
-    response = RecommendationResponse()
-    
-    try:
-        for item_dict in items_data:
-            item = ContentItem(**item_dict)
-            if item.type == ContentType.CHANNEL:
-                response.channels.append(item)
-            elif item.type == ContentType.SHOW:
-                response.shows.append(item)
-            elif item.type == ContentType.VOD:
-                response.vods.append(item)
-            elif item.type == ContentType.CLIP:
-                response.clips.append(item)
-            elif item.type == ContentType.LIVE_EVENT:
-                response.live_events.append(item)
-    except Exception as e:
-        logger.error(f"Error parsing cached data from key {used_key}: {e}")
-        raise HTTPException(status_code=500, detail="Internal data error")
-
-    return response
+    raise HTTPException(
+        status_code=400,
+        detail="Please specify a content type. Use routes like: /recommend/curated"
+    )
 
 
 @router.post("/recommend/{content_type}", response_model=CuratedRecommendationResponse)
@@ -80,7 +36,7 @@ async def get_content_recommendations(
 ):
     """
     Get recommendations for a specific content type.
-    Currently supports: 'curated'
+    Currently, supports: 'curated'
     """
     if content_type != "curated":
         raise HTTPException(status_code=400, detail=f"Unsupported content type: {content_type}")

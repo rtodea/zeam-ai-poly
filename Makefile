@@ -1,4 +1,4 @@
-.PHONY: api-local worker-local beat-local flower-local dev-repl build test clean
+	.PHONY: api-local worker-local beat-local flower-local dev-repl build test clean sync
 
 # Development commands
 api-local:
@@ -13,13 +13,15 @@ beat-local:
 flower-local:
 	uv run --project projects/popularity-flower celery -A zeam.worker.main flower
 
-dev-repl:
+repl:
 	@uv sync --quiet
-	uv run --project development/zeam/dev ipython
+	PYTHONPATH=bases:components uv run --project development/zeam/dev ipython
+
+sync:
+	uv sync --project development/zeam/dev --reinstall
 
 test:
-	uv run --project development/zeam/dev pytest components/zeam/analytics/tests
-	uv run --project development/zeam/dev pytest bases/zeam/api/tests
+	PYTHONPATH=bases:components uv run --project development/zeam/dev pytest components/zeam/analytics/tests bases/zeam/api/tests
 
 tests: test
 
