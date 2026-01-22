@@ -27,7 +27,7 @@ project = "popularity-beat"
 [tool.polylith.bricks]
 "../../bases/zeam/beat" = "zeam/beat"
 "../../components/zeam/worker_registry" = "zeam/worker_registry"
-"../../components/zeam/popularity" = "zeam/popularity"
+"../../components/zeam/config" = "zeam/config"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/redis_client" = "zeam/redis_client"
 

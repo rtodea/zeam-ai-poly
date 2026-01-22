@@ -1,6 +1,6 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from zeam.config.core import ZeamBaseSettings
 
-class RedshiftSettings(BaseSettings):
+class RedshiftSettings(ZeamBaseSettings):
     # Redshift
     REDSHIFT_HOST: str | None = None
     REDSHIFT_PORT: int = 5439
@@ -8,7 +8,5 @@ class RedshiftSettings(BaseSettings):
     REDSHIFT_USER: str | None = None
     REDSHIFT_PASSWORD: str | None = None
     REDSHIFT_SCHEMA: str = "public"  # Default schema
-
-    model_config = SettingsConfigDict(env_file=".env", env_ignore_empty=True, extra="ignore")
 
 settings = RedshiftSettings()

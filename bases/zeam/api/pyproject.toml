@@ -3,7 +3,7 @@ name = "zeam-api"
 version = "0.1.0"
 description = "API Base"
 dependencies = [
-    "zeam-popularity",
+    "zeam-config",
     "fastapi>=0.109.0",
     "celery[redis]>=5.4.0",
     "pytest>=8.0.0",
@@ -14,7 +14,7 @@ dependencies = [
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-popularity = { workspace = true }
+zeam-config = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
 zeam-worker-registry = { workspace = true }

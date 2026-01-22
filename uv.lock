@@ -13,7 +13,7 @@ members = [
     "zeam-analytics",
     "zeam-api",
     "zeam-beat",
-    "zeam-popularity",
+    "zeam-config",
     "zeam-redis-client",
     "zeam-redshift",
     "zeam-worker",
@@ -304,7 +304,7 @@ dependencies = [
     { name = "zeam-analytics" },
     { name = "zeam-api" },
     { name = "zeam-beat" },
-    { name = "zeam-popularity" },
+    { name = "zeam-config" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
     { name = "zeam-worker" },
@@ -323,7 +323,7 @@ requires-dist = [
     { name = "zeam-analytics", editable = "components/zeam/analytics" },
     { name = "zeam-api", editable = "bases/zeam/api" },
     { name = "zeam-beat", editable = "bases/zeam/beat" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
+    { name = "zeam-config", editable = "components/zeam/config" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
@@ -757,7 +757,7 @@ dependencies = [
     { name = "redshift-connector" },
     { name = "uvicorn" },
     { name = "zeam-api" },
-    { name = "zeam-popularity" },
+    { name = "zeam-config" },
     { name = "zeam-redshift" },
     { name = "zeam-worker-registry" },
 ]
@@ -771,7 +771,7 @@ requires-dist = [
     { name = "redshift-connector", specifier = ">=2.0.910" },
     { name = "uvicorn", specifier = ">=0.27.0" },
     { name = "zeam-api", editable = "bases/zeam/api" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
+    { name = "zeam-config", editable = "components/zeam/config" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
 ]
@@ -800,7 +800,7 @@ source = { editable = "projects/popularity-flower" }
 dependencies = [
     { name = "flower" },
     { name = "redis" },
-    { name = "zeam-popularity" },
+    { name = "zeam-config" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
     { name = "zeam-worker" },
@@ -811,7 +811,7 @@ dependencies = [
 requires-dist = [
     { name = "flower", specifier = ">=2.0.1" },
     { name = "redis", specifier = ">=5.0.1" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
+    { name = "zeam-config", editable = "components/zeam/config" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
@@ -830,7 +830,7 @@ dependencies = [
     { name = "redis" },
     { name = "redshift-connector" },
     { name = "zeam-analytics" },
-    { name = "zeam-popularity" },
+    { name = "zeam-config" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
     { name = "zeam-worker" },
@@ -846,7 +846,7 @@ requires-dist = [
     { name = "redis", specifier = ">=5.0.1" },
     { name = "redshift-connector", specifier = ">=2.0.910" },
     { name = "zeam-analytics", editable = "components/zeam/analytics" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
+    { name = "zeam-config", editable = "components/zeam/config" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker", editable = "bases/zeam/worker" },
@@ -1421,7 +1421,7 @@ dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "fastapi" },
     { name = "pytest" },
-    { name = "zeam-popularity" },
+    { name = "zeam-config" },
     { name = "zeam-redis-client" },
     { name = "zeam-redshift" },
     { name = "zeam-worker-registry" },
@@ -1437,7 +1437,7 @@ requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0" },
     { name = "fastapi", specifier = ">=0.109.0" },
     { name = "pytest", specifier = ">=8.0.0" },
-    { name = "zeam-popularity", editable = "components/zeam/popularity" },
+    { name = "zeam-config", editable = "components/zeam/config" },
     { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
     { name = "zeam-redshift", editable = "components/zeam/redshift" },
     { name = "zeam-worker-registry", editable = "components/zeam/worker_registry" },
@@ -1462,26 +1462,18 @@ requires-dist = [
 ]
 
 [[package]]
-name = "zeam-popularity"
+name = "zeam-config"
 version = "0.1.0"
-source = { editable = "components/zeam/popularity" }
+source = { editable = "components/zeam/config" }
 dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
-    { name = "redis" },
-    { name = "redshift-connector" },
-    { name = "zeam-redis-client" },
-    { name = "zeam-redshift" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pydantic", specifier = ">=2.6.0" },
     { name = "pydantic-settings", specifier = ">=2.1.0" },
-    { name = "redis", specifier = ">=5.0.1" },
-    { name = "redshift-connector", specifier = ">=2.0.910" },
-    { name = "zeam-redis-client", editable = "components/zeam/redis_client" },
-    { name = "zeam-redshift", editable = "components/zeam/redshift" },
 ]
 
 [[package]]
@@ -1492,6 +1484,7 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "redis" },
+    { name = "zeam-config" },
 ]
 
 [package.metadata]
@@ -1499,6 +1492,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.6.0" },
     { name = "pydantic-settings", specifier = ">=2.1.0" },
     { name = "redis", specifier = ">=5.0.1" },
+    { name = "zeam-config", editable = "components/zeam/config" },
 ]
 
 [[package]]
@@ -1509,6 +1503,7 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "redshift-connector" },
+    { name = "zeam-config" },
 ]
 
 [package.metadata]
@@ -1516,6 +1511,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.6.0" },
     { name = "pydantic-settings", specifier = ">=2.1.0" },
     { name = "redshift-connector", specifier = ">=2.0.910" },
+    { name = "zeam-config", editable = "components/zeam/config" },
 ]
 
 [[package]]
@@ -1543,7 +1539,7 @@ requires-dist = [
 
 [[package]]
 name = "zeam-worker-registry"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "components/zeam/worker_registry" }
 
 [package.dev-dependencies]

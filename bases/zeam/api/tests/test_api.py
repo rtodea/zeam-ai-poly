@@ -1,13 +1,10 @@
 import pytest
-import json
 from unittest.mock import patch
-import sys
 from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 from zeam.api.main import app
 from zeam.redis_client.client import get_redis_client
-from zeam.popularity.domain.schemas import ContentType
 
 client = TestClient(app)
 

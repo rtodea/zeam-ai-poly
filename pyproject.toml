@@ -25,7 +25,7 @@ module-root=""
 
 [tool.uv.workspace]
 members = [
-    "components/zeam/popularity",
+    "components/zeam/config",
     "components/zeam/worker_registry",
     "components/zeam/redshift",
     "components/zeam/redis_client",

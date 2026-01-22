@@ -6,6 +6,7 @@ dependencies = [
     "redshift-connector>=2.0.910",
     "pydantic-settings>=2.1.0",
     "pydantic>=2.6.0",
+    "zeam-config",
 ]
 requires-python = ">=3.12"
 
@@ -18,3 +19,7 @@ packages = []
 
 [tool.hatch.build.targets.wheel.force-include]
 "." = "zeam/redshift"
+
+[tool.uv.sources]
+zeam-config = { workspace = true }
+

@@ -93,10 +93,10 @@ uv run --project development/zeam/dev ipython
 Inside the REPL, you can import any component:
 
 ```python
-from zeam.popularity.core import config
+
+from zeam.popularity import core
 from zeam.redshift import config as redshift_config
 from zeam.celery_core.workers.dummy_worker import DummyWorker
-
 
 worker = DummyWorker()
 # worker.process()

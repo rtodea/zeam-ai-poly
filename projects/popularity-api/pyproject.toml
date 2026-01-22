@@ -5,7 +5,7 @@ description = "Popularity Recommender API"
 authors = [{ name = "Robert", email = "robert@zeam.ai" }]
 dependencies = [
     "zeam-api",
-    "zeam-popularity",
+    "zeam-config",
     "fastapi>=0.109.0",
     "uvicorn>=0.27.0",
     "pydantic-settings>=2.1.0",
@@ -19,7 +19,7 @@ requires-python = ">=3.12"
 
 [tool.uv.sources]
 zeam-api = { workspace = true }
-zeam-popularity = { workspace = true }
+zeam-config = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
 
@@ -37,6 +37,6 @@ project = "popularity-api"
 
 [tool.polylith.bricks]
 "../../bases/zeam/api" = "zeam/api"
-"../../components/zeam/popularity" = "zeam/popularity"
+"../../components/zeam/config" = "zeam/config"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/worker_registry" = "zeam/worker_registry"

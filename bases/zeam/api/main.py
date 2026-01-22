@@ -3,7 +3,7 @@ from zeam.api.api.v1.recommend import router as v1_router
 from zeam.api.api.health import router as health_router
 from zeam.api.api.redis import router as redis_router
 from zeam.api.api.scheduler import router as scheduler_router
-from zeam.popularity.core.config import settings
+from zeam.config.core import settings
 import uvicorn
 
 app = FastAPI(

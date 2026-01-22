@@ -1,14 +1,10 @@
 [project]
-name = "zeam-popularity"
+name = "zeam-config"
 version = "0.1.0"
-description = "Core popularity logic"
+description = "Core configuration and logic"
 dependencies = [
     "pydantic-settings>=2.1.0",
-    "redshift-connector>=2.0.910",
-    "redis>=5.0.1",
     "pydantic>=2.6.0",
-    "zeam-redshift",
-    "zeam-redis-client",
 ]
 requires-python = ">=3.12"
 
@@ -20,12 +16,8 @@ build-backend = "hatchling.build"
 packages = []
 
 [tool.hatch.build.targets.wheel.force-include]
-"." = "zeam/popularity"
-
-[tool.uv.sources]
-zeam-redshift = { workspace = true }
-zeam-redis-client = { workspace = true }
-
+"." = "zeam/config"
 
 [tool.polylith]
-brick = "component:popularity"
+brick = "component:config"
+

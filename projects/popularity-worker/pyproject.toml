@@ -6,7 +6,7 @@ dependencies = [
     "zeam-worker-registry",
     "zeam-worker",
     "zeam-analytics",
-    "zeam-popularity",
+    "zeam-config",
     "celery[redis]>=5.4.0",
     "redis>=5.0.1",
     "redshift-connector>=2.0.910",
@@ -22,7 +22,7 @@ requires-python = ">=3.12"
 zeam-worker = { workspace = true }
 zeam-analytics = { workspace = true }
 zeam-worker-registry = { workspace = true }
-zeam-popularity = { workspace = true }
+zeam-config = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
 
@@ -40,7 +40,7 @@ project = "popularity-worker"
 [tool.polylith.bricks]
 "../../bases/zeam/worker" = "zeam/worker"
 "../../components/zeam/worker_registry" = "zeam/worker_registry"
-"../../components/zeam/popularity" = "zeam/popularity"
+"../../components/zeam/config" = "zeam/config"
 "../../components/zeam/redshift" = "zeam/redshift"
 "../../components/zeam/redis_client" = "zeam/redis_client"
 

@@ -7,7 +7,7 @@ dependencies = [
     "zeam-api",
     "zeam-worker",
     "zeam-beat",
-    "zeam-popularity",
+    "zeam-config",
     "zeam-worker-registry",
     "zeam-redshift",
     "zeam-redis-client",
@@ -23,7 +23,7 @@ dependencies = [
 requires-python = ">=3.12"
 
 [tool.uv.sources]
-zeam-popularity = { workspace = true }
+zeam-config = { workspace = true }
 zeam-worker-registry = { workspace = true }
 zeam-redshift = { workspace = true }
 zeam-redis-client = { workspace = true }
@@ -47,7 +47,7 @@ project = "development"
 "../../../bases/zeam/api" = "zeam/api"
 "../../../bases/zeam/worker" = "zeam/worker"
 "../../../bases/zeam/beat" = "zeam/beat"
-"../../../components/zeam/popularity" = "zeam/popularity"
+"../../../components/zeam/config" = "zeam/config"
 "../../../components/zeam/worker_registry" = "zeam/worker_registry"
 "../../../components/zeam/redshift" = "zeam/redshift"
 "../../../components/zeam/redis_client" = "zeam/redis_client"
