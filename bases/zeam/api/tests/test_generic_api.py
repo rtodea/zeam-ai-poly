@@ -12,7 +12,7 @@ def test_health_check():
 
 
 @patch("zeam.redshift.health_check")
-@patch("zeam.redis_client.ping")
+@patch("zeam.api.api.health.ping", new_callable=AsyncMock)
 def test_health_connections(mock_ping, mock_health_check):
     mock_ping.return_value = True
     mock_health_check.return_value = True
