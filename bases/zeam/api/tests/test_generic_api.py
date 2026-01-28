@@ -11,7 +11,7 @@ def test_health_check():
     assert response.json() == {"status": "ok"}
 
 
-@patch("zeam.redshift.health_check")
+@patch("zeam.api.api.health.redshift_health_check")
 @patch("zeam.api.api.health.ping", new_callable=AsyncMock)
 def test_health_connections(mock_ping, mock_health_check):
     mock_ping.return_value = True
